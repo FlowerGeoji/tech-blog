@@ -252,6 +252,7 @@ a:focus {
 }
 
 .global-header {
+    background: linear-gradient(90deg, #35ccff, #d839f3);
     margin-bottom: var(--spacing-12);
 }
 
