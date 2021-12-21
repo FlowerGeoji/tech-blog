@@ -1,6 +1,10 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
+// exports.onCreatePage = ({ page, actions }) => {
+//     console.log({ page })
+// }
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
     const { createPage } = actions
 

@@ -1,10 +1,10 @@
-import React, { MouseEventHandler } from "react"
+import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import L from "lodash/fp"
 import cn from "classnames"
 
 interface ICategoriesProps {
-    onClickCategory?: MouseEventHandler
+    onClickCategory?: (category?: string) => void
 }
 
 function Categories({ onClickCategory }: ICategoriesProps) {
@@ -22,9 +22,12 @@ function Categories({ onClickCategory }: ICategoriesProps) {
 
     return (
         <div className={cn("space-x-1")}>
+            <button className={ButtonClass} onClick={() => onClickCategory()}>
+                All
+            </button>
             {L.map(category => {
                 return (
-                    <button className={cn("border", "border-solid", "py-1", "px-3", "rounded-full")} onClick={onClickCategory}>
+                    <button key={category} className={ButtonClass} onClick={() => onClickCategory(category)}>
                         {category}
                     </button>
                 )
@@ -32,5 +35,7 @@ function Categories({ onClickCategory }: ICategoriesProps) {
         </div>
     )
 }
+
+const ButtonClass = cn("border", "border-solid", "py-1", "px-3", "rounded-full")
 
 export default Categories

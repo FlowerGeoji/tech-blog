@@ -8,6 +8,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^4.0.0",
     "autoprefixer": "^10.4.0",
     "classnames": "^2.3.1",
     "gatsby": "^4.4.0",
@@ -28,6 +29,7 @@
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-transformer-remark": "^5.4.0",
     "gatsby-transformer-sharp": "^4.4.0",
+    "graphql-tag": "^2.12.6",
     "postcss": "^8.4.5",
     "prismjs": "^1.25.0",
     "react": "^17.0.1",
