@@ -17,10 +17,15 @@ const Layout = ({ location, title, children }) => {
             </header>
             <div className="global-wrapper" data-is-root-path={isRootPath}>
                 <main>{children}</main>
-                <footer>
-                    © {new Date().getFullYear()}, Built with
-                    {` `}
-                    <a href="https://www.gatsbyjs.com">Gatsby</a>
+                <footer className={cn("flex", "flex-row", "justify-center", "text-sm", "text-light", "py-14")}>
+                    ©
+                    <a href="https://github.com/FlowerGeoji" target="_blank" className={cn("text-primary", "font-semibold")}>
+                        FlowerGeoji
+                    </a>
+                    , <span>Built with</span>{" "}
+                    <a href="https://www.gatsbyjs.com" target="_blank" className={cn("text-primary", "font-semibold")}>
+                        Gatsby
+                    </a>
                 </footer>
             </div>
         </>

@@ -10,6 +10,10 @@ module.exports = {
 
             textColor: {
                 summary: "#7d7d7d",
+
+                lightest: "#aaaaaa",
+                light: "#7d7d7d",
+                normal: "#333333",
             },
             backgroundColor: {
                 author: "#ecf0f2",

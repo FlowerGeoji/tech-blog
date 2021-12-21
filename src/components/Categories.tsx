@@ -28,23 +28,30 @@ function Categories({ onClickCategory }: ICategoriesProps) {
     }
 
     return (
-        <div className={cn("space-x-1", "sticky", "top-0", "bg-gray-50", "py-4", "px-8")}>
-            <button className={ButtonClass({ selected: L.isEmpty(_category) })} onClick={() => _onClickCategory()}>
-                All
-            </button>
-            {L.map(category => {
-                return (
-                    <button key={category} className={ButtonClass({ selected: L.isEqual(category, _category) })} onClick={() => _onClickCategory(category)}>
-                        {category}
-                    </button>
-                )
-            }, _categories)}
+        <div className={cn("bg-white", "sticky", "top-0")}>
+            <div className={cn("space-x-2", "bg-primary", "bg-opacity-5", "py-4", "px-8", "border-x-8", "border-solid", "border-primary", "border-opacity-70")}>
+                <button className={ButtonClass({ selected: L.isEmpty(_category) })} onClick={() => _onClickCategory()}>
+                    All
+                </button>
+                {L.map(category => {
+                    return (
+                        <button key={category} className={ButtonClass({ selected: L.isEqual(category, _category) })} onClick={() => _onClickCategory(category)}>
+                            {category}
+                        </button>
+                    )
+                }, _categories)}
+            </div>
         </div>
     )
 }
 
 function ButtonClass({ selected }: { selected: boolean }) {
-    return cn("border", "border-solid", "py-1", "px-3", "rounded-full", "font-semibold", { "text-primary": selected, "border-primary": selected })
+    return cn("border", "border-solid", "py-1", "px-3", "rounded-full", "font-semibold", {
+        "text-gray-500": !selected,
+        "border-gray-500": !selected,
+        "text-primary": selected,
+        "border-primary": selected,
+    })
 }
 
 export default Categories
