@@ -1,4 +1,5 @@
 /* CSS Custom Properties Definitions */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -79,7 +80,7 @@ html {
 }
 
 body {
-    font-family: var(--font-body);
+    /* font-family: var(--font-body); */
     font-size: var(--fontSize-1);
     color: var(--color-text);
 }
@@ -102,7 +103,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-heading);
+    /* font-family: var(--font-heading); */
     margin-top: var(--spacing-12);
     margin-bottom: var(--spacing-6);
     line-height: var(--lineHeight-tight);
@@ -283,7 +284,7 @@ a:focus {
 
 .header-link-home {
     font-weight: var(--fontWeight-bold);
-    font-family: var(--font-heading);
+    /* font-family: var(--font-heading); */
     text-decoration: none;
     font-size: var(--fontSize-2);
 }
@@ -310,7 +311,7 @@ a:focus {
 
 .blog-post header p {
     font-size: var(--fontSize-2);
-    font-family: var(--font-heading);
+    /* font-family: var(--font-heading); */
 }
 
 .blog-post-nav ul {
