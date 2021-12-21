@@ -9,7 +9,7 @@ const Layout = ({ location, title, children }) => {
     console.log({ isRootPath, rootPath })
 
     return (
-        <div>
+        <>
             <header className={cn("global-header", "p-3")}>
                 <Link className={cn("header-link-home", "text-white", "opacity-80")} to="/">
                     {title}
@@ -23,7 +23,7 @@ const Layout = ({ location, title, children }) => {
                     <a href="https://www.gatsbyjs.com">Gatsby</a>
                 </footer>
             </div>
-        </div>
+        </>
     )
 }
 

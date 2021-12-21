@@ -19,7 +19,7 @@ function PostList({ category }: IPostListProps) {
                         slug
                     }
                     frontmatter {
-                        date(formatString: "MMMM DD, YYYY")
+                        date(formatString: "YYYY/MM/DD")
                         title
                         description
                         category
@@ -43,7 +43,7 @@ function PostList({ category }: IPostListProps) {
     }
 
     return (
-        <ol className={cn("list-none", "divide-y")}>
+        <ol className={cn("list-none", "px-8", "divide-y")}>
             {posts.map(post => {
                 const title = post.frontmatter.title || post.fields.slug
 
@@ -51,11 +51,13 @@ function PostList({ category }: IPostListProps) {
                     <li key={post.fields.slug}>
                         <article className="post-list-item" itemScope itemType="http://schema.org/Article">
                             <header>
-                                <h2>
+                                <h3>
                                     <Link to={post.fields.slug} itemProp="url">
-                                        <span itemProp="headline">{title}</span>
+                                        <span itemProp="headline" className={cn("text-gray-700")}>
+                                            {title}
+                                        </span>
                                     </Link>
-                                </h2>
+                                </h3>
                                 <small>{post.frontmatter.date}</small>
                             </header>
                             <section>
@@ -64,6 +66,7 @@ function PostList({ category }: IPostListProps) {
                                         __html: post.frontmatter.description || post.excerpt,
                                     }}
                                     itemProp="description"
+                                    className={cn("text-summary", "font-semibold")}
                                 />
                             </section>
                         </article>

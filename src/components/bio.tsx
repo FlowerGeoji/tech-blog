@@ -46,7 +46,7 @@ const Bio = () => {
                 alt="Profile picture"
             />
             <div className={cn("flex", "flex-col", "items-start")}>
-                <Link className={cn("py-0.5", "px-1.5", "rounded-lg", "bg-author", "text-author", "font-bold", "animate-siso")} to={"/aboutme"}>
+                <Link className={cn("py-0.5", "px-1.5", "rounded-lg", "bg-author", "text-primary", "font-bold", "animate-siso")} to={"/aboutme"}>
                     <span>@{author.name}</span>
                 </Link>
                 <span className={cn("mt-1", "text-sm", "text-summary", "font-semibold")}>{author.summary}</span>
@@ -54,7 +54,7 @@ const Bio = () => {
                     {L.pipe(
                         L.toPairs,
                         L.map(([key, url]) => (
-                            <a key={key} href={url} target={"_blank"} className={cn("text-author", "text-sm", "font-semibold")}>
+                            <a key={key} href={url} target={"_blank"} className={cn("text-primary", "text-sm", "font-semibold")}>
                                 {"✤ " + key}
                             </a>
                         ))

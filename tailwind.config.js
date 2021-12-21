@@ -4,8 +4,11 @@ module.exports = {
     content: ["./src/**/*"],
     theme: {
         extend: {
+            colors: {
+                primary: "#945abc",
+            },
+
             textColor: {
-                author: "#945abc",
                 summary: "#7d7d7d",
             },
             backgroundColor: {
