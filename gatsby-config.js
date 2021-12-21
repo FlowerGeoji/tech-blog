@@ -3,14 +3,15 @@ module.exports = {
         title: `FlowerGeoji.tech`,
         author: {
             name: `FlowerGeoji`,
-            summary: `who lives and works in San Francisco building useful things.`,
+            summary: `판타지 소설, 그 중에서도 아포칼립스나 사이버펑크 장르를 가장 좋아하는 프론트엔드 개발자입니다.`,
+        },
+        social: {
+            github: `https://github.com/FlowerGeoji`,
+            instagram: `https://www.instagram.com/good_jad/`,
         },
         description: `A starter blog demonstrating what Gatsby can do.`,
         categories: ["react", "javascript", "typescript"],
         siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
-        social: {
-            twitter: `kylemathews`,
-        },
     },
     plugins: [
         `gatsby-plugin-image`,

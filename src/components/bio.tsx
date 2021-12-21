@@ -7,6 +7,7 @@
 
 import * as React from "react"
 import cn from "classnames"
+import L from "lodash/fp"
 import { useStaticQuery, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
@@ -20,7 +21,8 @@ const Bio = () => {
                         summary
                     }
                     social {
-                        twitter
+                        instagram
+                        github
                     }
                 }
             }
@@ -28,8 +30,8 @@ const Bio = () => {
     `)
 
     // Set these values by editing "siteMetadata" in gatsby-config.js
-    const author = data.site.siteMetadata?.author
-    const social = data.site.siteMetadata?.social
+    const author: Author = data.site.siteMetadata?.author
+    const social: Social = data.site.siteMetadata?.social
 
     return (
         <div className="bio">
@@ -44,10 +46,20 @@ const Bio = () => {
                 alt="Profile picture"
             />
             <div className={cn("flex", "flex-col", "items-start")}>
-                <a className={cn("py-0.5", "px-1.5", "rounded-lg", "bg-author", "text-author", "font-bold")} href="/aboutme">
+                <a className={cn("py-0.5", "px-1.5", "rounded-lg", "bg-author", "text-author", "font-bold", "animate-siso")} href="/aboutme">
                     <span>@{author.name}</span>
                 </a>
-                <span className={cn("text-sm", "text-summary", "font-semibold")}>{author.summary}</span>
+                <span className={cn("mt-1", "text-sm", "text-summary", "font-semibold")}>{author.summary}</span>
+                <div className={cn("flex", "flex-row", "space-x-2")}>
+                    {L.pipe(
+                        L.toPairs,
+                        L.map(([key, url]) => (
+                            <a href={url} target={"_blank"} className={cn("text-author", "text-sm", "font-semibold")}>
+                                {"✤ " + key}
+                            </a>
+                        ))
+                    )(social)}
+                </div>
             </div>
         </div>
     )

@@ -11,6 +11,32 @@ module.exports = {
             backgroundColor: {
                 author: "#ecf0f2",
             },
+
+            keyframes: {
+                siso: {
+                    "0%": {
+                        transform: "rotate(0deg)",
+                    },
+                    "35%": {
+                        transform: "rotate(0deg)",
+                    },
+                    "40%": {
+                        transform: "rotate(-5deg)",
+                    },
+                    "60%": {
+                        transform: "rotate(5deg)",
+                    },
+                    "65%": {
+                        transform: "rotate(0deg)",
+                    },
+                    "100%": {
+                        transform: "rotate(0deg)",
+                    },
+                },
+            },
+            animation: {
+                siso: "siso 2s linear infinite",
+            },
         },
     },
     plugins: [
