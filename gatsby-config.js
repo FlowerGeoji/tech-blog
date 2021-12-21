@@ -2,10 +2,11 @@ module.exports = {
     siteMetadata: {
         title: `FlowerGeoji.tech`,
         author: {
-            name: `Kyle Mathews`,
+            name: `FlowerGeoji`,
             summary: `who lives and works in San Francisco building useful things.`,
         },
         description: `A starter blog demonstrating what Gatsby can do.`,
+        categories: ["react", "javascript", "typescript"],
         siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
         social: {
             twitter: `kylemathews`,
