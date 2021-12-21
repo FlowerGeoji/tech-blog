@@ -1,6 +1,6 @@
 ---
 title: New Beginnings
-date: "2015-05-28T22:40:32.169Z"
+date: "2021-05-28T22:40:32.169Z"
 category: "react"
 description: This is a custom description for SEO and Open Graph purposes, rather than the default generated excerpt. Simply add a description field to the frontmatter.
 ---
@@ -17,10 +17,66 @@ Commas, wild Question Marks and devious Semikoli, but the Little Blind Text
 didn’t listen. She packed her seven versalia, put her initial into the belt and
 made herself on the way.
 
-- This however showed weasel
-- Well uncritical so misled
-  - this is very interesting
-- Goodness much until that fluid owl
+```jsx{1, 3-5}
+const Bio = () => {
+    const data = useStaticQuery(graphql`
+        query BioQuery {
+            site {
+                siteMetadata {
+                    author {
+                        name
+                        summary
+                    }
+                    social {
+                        instagram
+                        github
+                    }
+                }
+            }
+        }
+    `)
+
+    // Set these values by editing "siteMetadata" in gatsby-config.js
+    const author: Author = data.site.siteMetadata?.author
+    const social: Social = data.site.siteMetadata?.social
+
+    return (
+        <div className="bio">
+            <StaticImage
+                className="bio-avatar"
+                layout="fixed"
+                formats={["auto", "webp", "avif"]}
+                src="../images/profile.jpeg"
+                width={100}
+                height={100}
+                quality={95}
+                alt="Profile picture"
+            />
+            <div className={cn("flex", "flex-col", "items-start")}>
+                <Link className={cn("py-0.5", "px-1.5", "rounded-lg", "bg-author", "text-primary", "font-bold", "animate-siso")} to={"/aboutme"}>
+                    <span>@{author.name}</span>
+                </Link>
+                <span className={cn("mt-1", "text-sm", "text-summary", "font-semibold")}>{author.summary}</span>
+                <div className={cn("flex", "flex-row", "space-x-2")}>
+                    {L.pipe(
+                        L.toPairs,
+                        L.map(([key, url]) => (
+                            <a key={key} href={url} target={"_blank"} className={cn("text-primary", "text-sm", "font-semibold")}>
+                                {"✤ " + key}
+                            </a>
+                        ))
+                    )(social)}
+                </div>
+            </div>
+        </div>
+    )
+}
+```
+
+-   This however showed weasel
+-   Well uncritical so misled
+    -   this is very interesting
+-   Goodness much until that fluid owl
 
 When she reached the first hills of the **Italic Mountains**, she had a last
 view back on the skyline of her hometown _Bookmarksgrove_, the headline of
