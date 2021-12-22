@@ -6,7 +6,6 @@ const Layout = ({ location, title, children }) => {
     // @ts-ignore
     const rootPath = `${__PATH_PREFIX__}/`
     const isRootPath = location.pathname === rootPath
-    console.log({ isRootPath, rootPath })
 
     return (
         <>
@@ -23,8 +22,8 @@ const Layout = ({ location, title, children }) => {
                         FlowerGeoji
                     </a>
                     , <span>Built with</span>{" "}
-                    <a href="https://www.gatsbyjs.com" target="_blank" className={cn("text-primary", "font-semibold")}>
-                        Gatsby
+                    <a href="https://github.com/JaeYeopHan/gatsby-starter-bee" target="_blank" className={cn("text-primary", "font-semibold")}>
+                        Gatsby-starter-bee
                     </a>
                 </footer>
             </div>
