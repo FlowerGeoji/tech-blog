@@ -11,7 +11,7 @@ module.exports = {
         },
         description: `A starter blog demonstrating what Gatsby can do.`,
         categories: ["react", "javascript", "typescript"],
-        siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+        siteUrl: `https://flowergeoji.me/`,
     },
     plugins: [
         `gatsby-plugin-image`,
