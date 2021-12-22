@@ -6,7 +6,7 @@ module.exports = {
         extend: {
             colors: {
                 primary: "#945abc",
-                secondary: "#cc007a"
+                secondary: "#cc007a",
             },
 
             textColor: {
@@ -48,7 +48,7 @@ module.exports = {
         },
     },
     plugins: [
-        plugin(function ({ addBase }) {
+        plugin(function ({ addBase, addUtilities }) {
             addBase({
                 html: {
                     fontFamily:
@@ -57,6 +57,22 @@ module.exports = {
                 body: {
                     fontFamily:
                         "Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif",
+                },
+            })
+
+            addUtilities({
+                ".triangle": {
+                    width: 0,
+                    height: 0,
+                    "background-color": "transparent",
+                    border: "0px solid white",
+                    "border-left-width": "4px",
+                    "border-right-width": "4px",
+                    "border-bottom-width": "6px",
+                },
+
+                ".text-shadow": {
+                    "text-shadow": ".5px .5px .5px rgb(220, 220, 220)",
                 },
             })
         }),

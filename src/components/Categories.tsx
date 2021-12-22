@@ -46,9 +46,9 @@ function Categories({ onClickCategory }: ICategoriesProps) {
 }
 
 function ButtonClass({ selected }: { selected: boolean }) {
-    return cn("border", "border-solid", "py-1", "px-3", "rounded-full", "font-semibold", {
+    return cn("border", "border-solid", "py-1", "px-3", "rounded-full", "font-semibold", "bg-white", "shadow", "hover:bg-gray-50", {
         "text-gray-500": !selected,
-        "border-gray-500": !selected,
+        "border-gray-100": !selected,
         "text-primary": selected,
         "border-primary": selected,
     })
