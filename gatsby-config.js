@@ -65,6 +65,7 @@ module.exports = {
         //     trackingId: `ADD YOUR TRACKING ID HERE`,
         //   },
         // },
+        `gatsby-plugin-sitemap`,
         {
             resolve: `gatsby-plugin-feed`,
             options: {
