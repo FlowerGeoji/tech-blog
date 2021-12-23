@@ -12,11 +12,11 @@ Iterator pattern은 배열과 같은 순차적인 데이터를 순회하기 위�
 
 Iterator&Iterable Protocol은 아래와 같이 몇가지 규칙을 통하여 연속된 데이터를 순회할 수 있도록 하는 약속입니다.
 
-- Iterator는 {value: any, done: boolean} 모양의 객체를 리턴하는 next()라는 함수를 가진 값을 말합니다.
+- **Iterator**는 ``{value: any, done: boolean}`` 모양의 객체를 리턴하는 ``next()``라는 함수를 가진 값을 말합니다.
 
-- Iterable은 [Symbol.iterator]를 키로 하는 프로퍼티에 Iterator를 반환하는 함수가 들어있는 값을 말합니다.
+- **Iterable**은 ``[Symbol.iterator]``를 키로 하는 프로퍼티에 **Iterator**를 반환하는 함수가 들어있는 값을 말합니다.
 
-- Iterator&Iterable protocol을 준수하면 순차적으로 데이터를 순회할 수 있게 되어 for...of나 spread 및 rest 기능들을 사용할 수 있게 됩니다.
+- **Iterator&Iterable protocol**을 준수하면 순차적으로 데이터를 순회할 수 있게 되어 ``for...of``나 ``spread`` 및 ``rest`` 기능들을 사용할 수 있게 됩니다.
 
 Array, Map, Set과 같은 컬렉션형 객체들은 기본적으로 Iterable로써 Symbol.iterator를 키로 하여 Iterator를 반환하는 함수를 가지고 있으며, 이는 곧 Iterator&Iterable Protocol을 만족한다는 뜻입니다.
 
@@ -99,13 +99,13 @@ for(const item of iterable){
 
 ## Well made Iterator
 
-Well made iterator란 Iterator이면서 Iterable인 값을 말하며(보통 자기 자신을 반환하는 Iterator) Iterator의 재사용성을 높이기 위한 방법입니다. Well made iterator에 대해 설명하기 앞서 먼저 좀 더 명확하게 Iterable과 Iterator의 관계를 짚어볼 필요가 있습니다.
+Well made iterator란 **Iterator이면서 Iterable인 값**을 말하며(보통 자기 자신을 반환하는 Iterator) **Iterator의 재사용성을 높이기 위한 방법입니다.** Well made iterator에 대해 설명하기 앞서 먼저 좀 더 명확하게 Iterable과 Iterator의 관계를 짚어볼 필요가 있습니다.
 
 - Iterator & Iterator Protocol에서 순회는 다음과 같이 진행됩니다.
 
-    1. '**Iterable**'의 [**Symbol.iterator**] 프로퍼티에 들어있는 함수를 실행하여 '**Iterator**'를 만듭니다.
-    
-    2. 차례대로 '**Iterator**'의 **next 함수**를 호출하여 데이터를 순회합니다.
+    1. '**Iterable**'의 ``[Symbol.iterator]`` 프로퍼티에 들어있는 함수를 실행하여 '**Iterator**'를 만듭니다.
+
+    2. 차례대로 '**Iterator**'의 ``next()`` 함수를 호출하여 데이터를 순회합니다.
 
 - 엄밀히 따지면 '**Iterable**'을 순회하는 것이지 '**Iterator**'를 순회하는 것이 아닙니다.
 
@@ -215,7 +215,7 @@ removeFirst(iterator) // { value: 3, done: false }
 sumAll(iterator) // 2+1 = 3
 ```
 
-훨씬 코드가 깔끔하지 않나요?(javascript에서 제공하는 순회기능을 이용해서 쉽게 문제를 해결하고 있습니다!) 이처럼 Iterable & Iterator를 만들 때 잘 만든다면(Well made) 'Iterator'로 재사용성이 아주 높은 코드를 작성할 수 있습니다.
+훨씬 코드가 깔끔하지 않나요?(javascript에서 제공하는 순회기능을 이용해서 쉽게 문제를 해결하고 있습니다!) 이처럼 **Iterable & Iterator를 만들 때 잘 만든다면(Well made) 'Iterator'로 재사용성이 아주 높은 코드를 작성할 수 있습니다.**
 
 ---
 
