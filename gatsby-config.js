@@ -37,7 +37,7 @@ module.exports = {
                     {
                         resolve: `gatsby-remark-images`,
                         options: {
-                            maxWidth: 630,
+                            maxWidth: "768",
                         },
                     },
                     {
@@ -134,7 +134,12 @@ module.exports = {
             },
         },
         `gatsby-plugin-react-helmet`,
-        `gatsby-plugin-sass`,
+        {
+            resolve: `gatsby-plugin-sass`,
+            options: {
+                postCssPlugins: [require("tailwindcss"), require("./tailwind.config.js")],
+            },
+        },
         // this (optional) plugin enables Progressive Web App + Offline functionality
         // To learn more, visit: https://gatsby.dev/offline
         // `gatsby-plugin-offline`,

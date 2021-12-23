@@ -1,8 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import L from "lodash/fp"
-import gql from "graphql-tag"
-import { useQuery } from "@apollo/react-hooks"
 import cn from "classnames"
 
 interface IPostListProps {
