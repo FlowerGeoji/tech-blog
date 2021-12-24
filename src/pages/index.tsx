@@ -14,7 +14,7 @@ const BlogIndex = ({ data, location }) => {
 
     return (
         <Layout location={location} title={siteTitle}>
-            <Seo title="All posts" />
+            <Seo title="FlowerGeoji" />
             <Bio />
             <Categories onClickCategory={_setCategory} />
             <PostList category={_category} />

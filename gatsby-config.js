@@ -1,6 +1,6 @@
 module.exports = {
     siteMetadata: {
-        title: `FlowerGeoji.tech`,
+        title: `Tech blog`,
         author: {
             name: `FlowerGeoji`,
             summary: `판타지 소설, 그 중에서도 아포칼립스나 사이버펑크 장르를 가장 좋아하는 프론트엔드 개발자입니다.`,
@@ -9,13 +9,11 @@ module.exports = {
             github: `https://github.com/FlowerGeoji`,
             instagram: `https://www.instagram.com/good_jad/`,
         },
-        description: `A starter blog demonstrating what Gatsby can do.`,
+        description: `A frontend tech blog posting react, javascript, typescript, etc`,
         categories: ["react", "javascript", "typescript"],
         siteUrl: `https://flowergeoji.me/`,
     },
     plugins: [
-        `gatsby-plugin-image`,
-        `gatsby-plugin-postcss`,
         {
             resolve: `gatsby-source-filesystem`,
             options: {
@@ -57,6 +55,7 @@ module.exports = {
                 ],
             },
         },
+        `gatsby-plugin-image`,
         `gatsby-transformer-sharp`,
         `gatsby-plugin-sharp`,
         // {
@@ -66,6 +65,7 @@ module.exports = {
         //   },
         // },
         `gatsby-plugin-sitemap`,
+        `gatsby-plugin-react-helmet`,
         {
             resolve: `gatsby-plugin-feed`,
             options: {
@@ -122,18 +122,19 @@ module.exports = {
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-                name: `Gatsby Starter Blog`,
-                short_name: `GatsbyJS`,
+                name: `FlowerGeoji Tech Blog`,
+                short_name: `FG-TechBlog`,
                 start_url: `/`,
-                background_color: `#ffffff`,
                 // This will impact how browsers show your PWA/website
-                // https://css-tricks.com/meta-theme-color-and-trickery/
-                // theme_color: `#663399`,
-                display: `minimal-ui`,
+                // https://css-tricks.com/meta-theme-color-and-trickery
+                background_color: `#ffffff`,
+                theme_color: `#945abc`,
+                display: `standalone`,
                 icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+                orientation: `portrait`,
             },
         },
-        `gatsby-plugin-react-helmet`,
+        `gatsby-plugin-postcss`,
         {
             resolve: `gatsby-plugin-sass`,
             options: {
