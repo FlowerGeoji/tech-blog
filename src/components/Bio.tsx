@@ -39,13 +39,13 @@ const Bio = () => {
                 className="bio-avatar"
                 layout="fixed"
                 formats={["auto", "webp", "avif"]}
-                src="../images/profile.jpeg"
+                src="../images/profile_emoji.gif"
                 width={100}
                 height={100}
                 quality={95}
                 alt="Profile picture"
             />
-            <div className={cn("flex", "flex-col", "items-start")}>
+            <div className={cn("flex", "flex-col", "items-start", "justify-evenly")}>
                 <Link className={cn("py-0.5", "px-1.5", "rounded-lg", "bg-author", "text-primary", "font-bold", "animate-siso")} to={"/aboutme"}>
                     <span>@{author.name}</span>
                 </Link>
