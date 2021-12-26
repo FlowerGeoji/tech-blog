@@ -6,14 +6,14 @@ thumbnail: { thumbnailSrc }
 draft: false
 ---
 
-보통 React Suspense라고 하면 React.lazy를 이용해서 비동기적으로 컴포넌트를 가져오고, 이를 통해서 코드분할을 하여 리액트 어플리케이션의 초기 로딩속도를 높이는 이야기를 많이 합니다.(React18 에서는 SSR까지 지원한다고 합니다.) 본 글에서는 Suspense의 정확한 동작방식을 알아보고, 비동기 작업을 좀 더 선언적이고 깔끔하게 처리하는 방법에 대해 이야기 해보겠습니다.
+보통 React Suspense라고 하면 React.lazy를 이용해서 비동기적으로 컴포넌트를 가져오고, 이를 통해서 코드 분할을 하여 리액트 어플리케이션의 초기 로딩 속도를 높이는 이야기를 많이 합니다. (React18에서는 SSR까지 지원한다고 합니다.) 본 글에서는 Suspense의 정확한 동작 방식을 알아보고, 비동기 작업을 좀 더 선언적이고 깔끔하게 처리하는 방법에 대해 이야기해 보겠습니다.
 
 ## Suspense 동작 방식
 
 먼저 Suspense와 Promise(비동기 작업)의 동작 방식을 살펴보면 다음과 같습니다.
 
-1. Suspense의 children이 promise를 예외로 던지면(throw), Suspense는 fallback 프로퍼티를 렌더링합니다.
-2. 던져진 promise가 완료되면(fulfilled), Suspense는 chidren을 다시 렌더링 합니다.
+1. Suspense의 children이 **예외 처리로 promise를 던지게 되면(throw)**, Suspense는 fallback 프로퍼티를 렌더링합니다.
+2. **예외로 던져진 promise가 완료되면(fulfilled)**, Suspense는 chidren을 다시 렌더링합니다.
 
 ```js{21-27}
 function usePromise<I, T>(promise: (arg: I) => Promise<T>, arg: I) {
@@ -83,15 +83,15 @@ React에서 일반적으로 렌더링 시 비동기 작업 처리를 어떻게 �
 - **Fetch-then-render (for example, Relay without Suspense)**: ``useEffect``나 ``componentDidMount``로 화면을 그리는데 필요한 데이터를 모두 조회한 후 렌더링을 시작합니다.
 - **Render-as-you-fetch (for example, Relay with Suspense)**: 비동기 작업과 렌더링을 동시에 시작합니다. Suspense는 초기에 ``fallback`` 프로퍼티를 렌더링하고, 비동기 작업이 완료되면 자식 컴포넌트를 다시 렌더링합니다.
 
- Fetch-on-render 또는 Fetch-then-render 방식으로 비동기 작업을 처리하면 여러가지 어려움들이 있는데요. 어떠한 어려움들이 있는지 살펴보고 Suspense를 사용하면 어떻게 달라지는지 이야기해 보도록 하겠습니다.
+**Fetch-on-render** 또는 **Fetch-then-render** 방식으로 비동기 작업을 처리하면 여러가지 어려움들이 있는데요. 어떠한 어려움들이 있는지 살펴보고 **Suspense**를 사용하면 어떻게 달라지는지 이야기해 보도록 하겠습니다.
 
- #### 경쟁상태(Rece-condition)
+#### 경쟁 상태(Rece-condition)
 
- 경쟁상태는 둘 이상의 작업들이 진행될때 각각의 실행 순서나 타이밍 때문에 서로 영향을 받는 상태를 뜻합니다. **Fetch-on-render** 방식에서 비동기 작업들의 경쟁상태는 논리상으로는 아무런 문제가 없지만, 사용성 측면에서는 많은 문제를 야기할 수 있습니다.
+경쟁 상태는 둘 이상의 작업들이 진행될 때 각각의 실행 순서나 타이밍 때문에 서로 영향을 받는 상태를 뜻합니다. **Fetch-on-render** 방식에서 비동기 작업들의 경쟁 상태는 논리상으로는 아무런 문제가 없지만, 사용성 측면에서는 많은 문제를 야기할 수 있습니다.
 
 ![race-condition-sample](./race-condition-sample1.gif)
 
-이는 React 컴포넌트들이 각각 자신만의 “생명주기”를 가지고, 마찬가지로 비동기 작업들도 각각 자신만의 “생명주기”를 가지기 때문에 발생하는 문제입니다. 이 문제를 해결하기 위해서 컴포넌트를 만들 때 데이터 fetching과 렌더링 사이를 동기화하는 작업을 추가하게 됩니다.
+이는 React 컴포넌트들이 각각 자신만의 “생명주기”를 가지고, 마찬가지로 비동기 작업들도 각각 자신만의 “생명주기”를 가지기 때문에 발생하는 문제입니다. 이 문제를 해결하기 위해서 컴포넌트를 만들 때 데이터 fetching과 렌더링 사이를 **동기화하는 작업을 추가하게 됩니다.**
 
 ```js{9-14, 32-35}
 function User({ uid }: { uid: number }) {
