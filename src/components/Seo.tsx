@@ -71,7 +71,9 @@ const Seo = ({ description, lang, meta, title }) => {
                     content: metaDescription,
                 },
             ].concat(meta)}
-        />
+        >
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3367639903622741" crossOrigin="anonymous" />
+        </Helmet>
     )
 }
 
