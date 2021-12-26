@@ -58,12 +58,12 @@ module.exports = {
         `gatsby-plugin-image`,
         `gatsby-transformer-sharp`,
         `gatsby-plugin-sharp`,
-        // {
-        //   resolve: `gatsby-plugin-google-analytics`,
-        //   options: {
-        //     trackingId: `ADD YOUR TRACKING ID HERE`,
-        //   },
-        // },
+        {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+                trackingId: `G-VHVHG9B7VZ`,
+            },
+        },
         `gatsby-plugin-sitemap`,
         `gatsby-plugin-react-helmet`,
         {
