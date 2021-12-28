@@ -77,23 +77,65 @@ module.exports = {
                 // enableWebVitalsTracking: true, // defaults to false
             },
         },
-        `gatsby-plugin-sitemap`,
+        {
+            resolve: "gatsby-plugin-sitemap",
+            options: {
+                query: `
+                {
+                    allSitePage {
+                        nodes {
+                        path
+                        }
+                    }
+                    allWpContentNode(filter: {nodeType: {in: ["Post", "Page"]}}) {
+                        nodes {
+                        ... on WpPost {
+                            uri
+                            modifiedGmt
+                        }
+                        ... on WpPage {
+                            uri
+                            modifiedGmt
+                        }
+                        }
+                    }
+                }`,
+                resolveSiteUrl: () => siteUrl,
+                resolvePages: ({ allSitePage: { nodes: allPages }, allWpContentNode: { nodes: allWpNodes } }) => {
+                    const wpNodeMap = allWpNodes.reduce((acc, node) => {
+                        const { uri } = node
+                        acc[uri] = node
+
+                        return acc
+                    }, {})
+
+                    return allPages.map(page => {
+                        return { ...page, ...wpNodeMap[page.path] }
+                    })
+                },
+                serialize: ({ path, modifiedGmt }) => {
+                    return {
+                        url: path,
+                        lastmod: modifiedGmt,
+                    }
+                },
+            },
+        },
         `gatsby-plugin-react-helmet`,
         {
             resolve: `gatsby-plugin-feed`,
             options: {
                 query: `
-          {
-            site {
-              siteMetadata {
-                title
-                description
-                siteUrl
-                site_url: siteUrl
-              }
-            }
-          }
-        `,
+                {
+                    site {
+                        siteMetadata {
+                            title
+                            description
+                            siteUrl
+                            site_url: siteUrl
+                        }
+                    }
+                }`,
                 feeds: [
                     {
                         serialize: ({ query: { site, allMarkdownRemark } }) => {
@@ -108,24 +150,23 @@ module.exports = {
                             })
                         },
                         query: `
-              {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
-                  nodes {
-                    excerpt
-                    html
-                    fields {
-                      slug
-                    }
-                    frontmatter {
-                      title
-                      date
-                    }
-                  }
-                }
-              }
-            `,
+                        {
+                            allMarkdownRemark(
+                                sort: { order: DESC, fields: [frontmatter___date] },
+                            ) {
+                                nodes {
+                                    excerpt
+                                    html
+                                    fields {
+                                    slug
+                                    }
+                                    frontmatter {
+                                    title
+                                    date
+                                    }
+                                }
+                            }
+                        }`,
                         output: "/rss.xml",
                         title: "Gatsby Starter Blog RSS Feed",
                     },
