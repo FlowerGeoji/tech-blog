@@ -1,6 +1,6 @@
 module.exports = {
     siteMetadata: {
-        title: `Tech blog`,
+        title: `Frontend Tech blog`,
         author: {
             name: `FlowerGeoji`,
             summary: `판타지 소설, 그 중에서도 아포칼립스나 사이버펑크 장르를 가장 좋아하는 프론트엔드 개발자입니다.`,
