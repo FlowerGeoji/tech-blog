@@ -10,7 +10,7 @@ module.exports = {
             instagram: `https://www.instagram.com/good_jad/`,
         },
         description: `A frontend tech blog posting react, javascript, typescript, etc`,
-        categories: ["react", "javascript", "typescript"],
+        categories: ["react", "javascript", "typescript", "web"],
         siteUrl: `https://flowergeoji.me/`,
     },
     plugins: [
