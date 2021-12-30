@@ -90,18 +90,6 @@ module.exports = {
                         path
                         }
                     }
-                    allWpContentNode(filter: {nodeType: {in: ["Post", "Page"]}}) {
-                        nodes {
-                        ... on WpPost {
-                            uri
-                            modifiedGmt
-                        }
-                        ... on WpPage {
-                            uri
-                            modifiedGmt
-                        }
-                        }
-                    }
                 }`,
                 resolveSiteUrl: () => siteUrl,
                 resolvePages: ({ allSitePage: { nodes: allPages }, allWpContentNode: { nodes: allWpNodes } }) => {
