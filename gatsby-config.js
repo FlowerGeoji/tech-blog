@@ -1,3 +1,6 @@
+// const siteUrl = process.env.URL || `https://flowergeoji.me`
+const siteUrl = `https://flowergeoji.me`
+
 module.exports = {
     siteMetadata: {
         title: `Frontend Tech blog`,
@@ -11,7 +14,7 @@ module.exports = {
         },
         description: `A frontend tech blog posting react, javascript, typescript, etc`,
         categories: ["react", "javascript", "typescript", "web"],
-        siteUrl: `https://flowergeoji.me/`,
+        siteUrl,
     },
     plugins: [
         {
