@@ -1,6 +1,3 @@
-// const siteUrl = process.env.URL || `https://flowergeoji.me`
-const siteUrl = `https://flowergeoji.me`
-
 module.exports = {
     siteMetadata: {
         title: `Frontend Tech blog`,
@@ -14,7 +11,7 @@ module.exports = {
         },
         description: `A frontend tech blog posting react, javascript, typescript, etc`,
         categories: ["react", "javascript", "typescript", "web"],
-        siteUrl,
+        siteUrl: `https://flowergeoji.me`,
     },
     plugins: [
         {
@@ -85,23 +82,25 @@ module.exports = {
             options: {
                 query: `
                 {
+                    site {
+                        siteMetadata {
+                            siteUrl
+                        }
+                    }
                     allSitePage {
                         nodes {
-                        path
+                            path
                         }
                     }
                 }`,
-                resolveSiteUrl: () => siteUrl,
-                resolvePages: ({ allSitePage: { nodes: allPages }, allWpContentNode: { nodes: allWpNodes } }) => {
-                    const wpNodeMap = allWpNodes.reduce((acc, node) => {
-                        const { uri } = node
-                        acc[uri] = node
-
-                        return acc
-                    }, {})
-
+                resolveSiteUrl: ({
+                    site: {
+                        siteMetadata: { siteUrl },
+                    },
+                }) => siteUrl,
+                resolvePages: ({ allSitePage: { nodes: allPages } }) => {
                     return allPages.map(page => {
-                        return { ...page, ...wpNodeMap[page.path] }
+                        return { ...page }
                     })
                 },
                 serialize: ({ path, modifiedGmt }) => {
