@@ -16,15 +16,28 @@ const Layout = ({ location, title, children }) => {
             </header>
             <div className="global-wrapper" data-is-root-path={isRootPath}>
                 <main>{children}</main>
-                <footer className={cn("flex", "flex-row", "justify-center", "text-sm", "text-light", "py-14")}>
-                    ©
-                    <a href="https://github.com/FlowerGeoji" target="_blank" className={cn("text-primary", "font-semibold")}>
-                        FlowerGeoji
-                    </a>
-                    , <span>Built with</span>{" "}
-                    <a href="https://github.com/JaeYeopHan/gatsby-starter-bee" target="_blank" className={cn("text-primary", "font-semibold")}>
-                        Gatsby-starter-bee
-                    </a>
+                <footer className={cn("flex", "flex-col", "items-center", "text-sm", "text-light", "py-14")}>
+                    <div>
+                        ©TechBlog{" "}
+                        <a href="https://github.com/FlowerGeoji" target="_blank" className={cn("text-primary", "font-semibold")}>
+                            FlowerGeoji
+                        </a>
+                        , <span>Built with</span>{" "}
+                        <a href="https://github.com/JaeYeopHan/gatsby-starter-bee" target="_blank" className={cn("text-primary", "font-semibold")}>
+                            Gatsby-starter-bee
+                        </a>
+                    </div>
+
+                    <div>
+                        Icon made by{" "}
+                        <a href="https://www.freepik.com" title="Freepik" className={cn("text-primary", "font-semibold")}>
+                            Freepik
+                        </a>{" "}
+                        from{" "}
+                        <a href="https://www.flaticon.com/kr/" title="Flaticon" className={cn("text-primary", "font-semibold")}>
+                            www.flaticon.com
+                        </a>
+                    </div>
                 </footer>
             </div>
         </>
