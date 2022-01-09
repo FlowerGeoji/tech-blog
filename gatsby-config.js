@@ -111,6 +111,14 @@ module.exports = {
                 },
             },
         },
+        {
+            resolve: "gatsby-plugin-robots-txt",
+            options: {
+                host: "https://flowergeoji.me",
+                sitemap: "https://flowergeoji.me/sitemap/sitemap-index.xml",
+                policy: [{ userAgent: "*", allow: "/" }],
+            },
+        },
         `gatsby-plugin-react-helmet`,
         {
             resolve: `gatsby-plugin-feed`,
