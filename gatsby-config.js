@@ -55,6 +55,7 @@ module.exports = {
                 ],
             },
         },
+        `gatsby-plugin-react-helmet`,
         `gatsby-plugin-image`,
         `gatsby-transformer-sharp`,
         `gatsby-plugin-sharp`,
@@ -77,98 +78,99 @@ module.exports = {
                 // enableWebVitalsTracking: true, // defaults to false
             },
         },
-        {
-            resolve: "gatsby-plugin-sitemap",
-            options: {
-                query: `
-                {
-                    site {
-                        siteMetadata {
-                            siteUrl
-                        }
-                    }
-                    allSitePage {
-                        nodes {
-                            path
-                        }
-                    }
-                }`,
-                resolveSiteUrl: ({
-                    site: {
-                        siteMetadata: { siteUrl },
-                    },
-                }) => siteUrl,
-                resolvePages: ({ allSitePage: { nodes: allPages } }) => {
-                    return allPages.map(page => {
-                        return { ...page }
-                    })
-                },
-                serialize: ({ path, modifiedGmt }) => {
-                    return {
-                        url: path,
-                        lastmod: modifiedGmt,
-                    }
-                },
-            },
-        },
+        `gatsby-plugin-sitemap`,
+        `gatsby-plugin-feed`,
+        // {
+        //     resolve: `gatsby-plugin-sitemap`,
+        //     options: {
+        //         query: `
+        //         {
+        //             site {
+        //                 siteMetadata {
+        //                     siteUrl
+        //                 }
+        //             }
+        //             allSitePage {
+        //                 nodes {
+        //                     path
+        //                 }
+        //             }
+        //         }`,
+        //         resolveSiteUrl: ({
+        //             site: {
+        //                 siteMetadata: { siteUrl },
+        //             },
+        //         }) => siteUrl,
+        //         resolvePages: ({ allSitePage: { nodes: allPages } }) => {
+        //             return allPages.map(page => {
+        //                 return { ...page }
+        //             })
+        //         },
+        //         serialize: ({ path, modifiedGmt }) => {
+        //             return {
+        //                 url: path,
+        //                 lastmod: modifiedGmt,
+        //             }
+        //         },
+        //     },
+        // },
+        // {
+        //     resolve: `gatsby-plugin-feed`,
+        //     options: {
+        //         query: `
+        //         {
+        //             site {
+        //                 siteMetadata {
+        //                     title
+        //                     description
+        //                     siteUrl
+        //                     site_url: siteUrl
+        //                 }
+        //             }
+        //         }`,
+        //         feeds: [
+        //             {
+        //                 serialize: ({ query: { site, allMarkdownRemark } }) => {
+        //                     return allMarkdownRemark.nodes.map(node => {
+        //                         return Object.assign({}, node.frontmatter, {
+        //                             description: node.excerpt,
+        //                             date: node.frontmatter.date,
+        //                             url: site.siteMetadata.siteUrl + node.fields.slug,
+        //                             guid: site.siteMetadata.siteUrl + node.fields.slug,
+        //                             custom_elements: [{ "content:encoded": node.html }],
+        //                         })
+        //                     })
+        //                 },
+        //                 query: `
+        //                 {
+        //                     allMarkdownRemark(
+        //                         sort: { order: DESC, fields: [frontmatter___date] },
+        //                     ) {
+        //                         nodes {
+        //                             excerpt
+        //                             html
+        //                             fields {
+        //                             slug
+        //                             }
+        //                             frontmatter {
+        //                             title
+        //                             date
+        //                             }
+        //                         }
+        //                     }
+        //                 }`,
+        //                 output: "/rss.xml",
+        //                 title: "Gatsby Starter Blog RSS Feed",
+        //             },
+        //         ],
+        //     },
+        // },
         {
             resolve: "gatsby-plugin-robots-txt",
             options: {
                 host: "https://flowergeoji.me",
                 sitemap: "https://flowergeoji.me/sitemap/sitemap-index.xml",
                 policy: [{ userAgent: "*", allow: "/" }],
-            },
-        },
-        `gatsby-plugin-react-helmet`,
-        {
-            resolve: `gatsby-plugin-feed`,
-            options: {
-                query: `
-                {
-                    site {
-                        siteMetadata {
-                            title
-                            description
-                            siteUrl
-                            site_url: siteUrl
-                        }
-                    }
-                }`,
-                feeds: [
-                    {
-                        serialize: ({ query: { site, allMarkdownRemark } }) => {
-                            return allMarkdownRemark.nodes.map(node => {
-                                return Object.assign({}, node.frontmatter, {
-                                    description: node.excerpt,
-                                    date: node.frontmatter.date,
-                                    url: site.siteMetadata.siteUrl + node.fields.slug,
-                                    guid: site.siteMetadata.siteUrl + node.fields.slug,
-                                    custom_elements: [{ "content:encoded": node.html }],
-                                })
-                            })
-                        },
-                        query: `
-                        {
-                            allMarkdownRemark(
-                                sort: { order: DESC, fields: [frontmatter___date] },
-                            ) {
-                                nodes {
-                                    excerpt
-                                    html
-                                    fields {
-                                    slug
-                                    }
-                                    frontmatter {
-                                    title
-                                    date
-                                    }
-                                }
-                            }
-                        }`,
-                        output: "/rss.xml",
-                        title: "Gatsby Starter Blog RSS Feed",
-                    },
-                ],
             },
         },
         {
