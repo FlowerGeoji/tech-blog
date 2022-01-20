@@ -29,7 +29,20 @@ function Categories({ onClickCategory }: ICategoriesProps) {
 
     return (
         <div className={cn("bg-white", "sticky", "top-0")}>
-            <div className={cn("space-x-2", "bg-primary", "bg-opacity-5", "py-4", "px-8", "border-x-8", "border-solid", "border-primary", "border-opacity-70")}>
+            <div
+                className={cn(
+                    "space-x-2",
+                    "space-y-2",
+                    "bg-primary",
+                    "bg-opacity-5",
+                    "py-4",
+                    "px-8",
+                    "border-x-8",
+                    "border-solid",
+                    "border-primary",
+                    "border-opacity-70"
+                )}
+            >
                 <button className={ButtonClass({ selected: L.isEmpty(_category) })} onClick={() => _onClickCategory()}>
                     All
                 </button>

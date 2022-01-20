@@ -21,6 +21,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
                         fields {
                             slug
                         }
+                        frontmatter {
+                            category
+                        }
+                    }
+                }
+                site {
+                    siteMetadata {
+                        categories
                     }
                 }
             }
