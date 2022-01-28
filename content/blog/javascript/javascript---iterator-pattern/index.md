@@ -6,11 +6,11 @@ thumbnail: { thumbnailSrc }
 draft: false
 ---
 
-Iterator pattern은 배열과 같은 순차적인 데이터를 순회하기 위한 방법으로, javascript ES6(ECMA2015) 버전부터 Symbol과 함께 추가된 개념입니다. ES6전에는 여러 가지 컬렉션 관련 라이브러리들이 각자의 방법으로 순회 방법들을 제공했었지만, ES6에서는 공식적으로 Iterator/Iterable Protocol을 적용하여 순차적인 데이터의 순회 방식을 통일시켰습니다. Iterator pattern을 이용함으로써 ``for...of``나 ``spread`` 및 ``rest``등의 순차적인 데이터 처리와 ``지연 평가``를 사용할 수 있습니다.
+Iterator pattern은 배열과 같은 순차적인 데이터를 순회하기 위한 방법으로, javascript ES6(ECMA2015) 버전부터 Symbol과 함께 추가된 개념입니다. ES6전에는 여러 가지 컬렉션 관련 라이브러리들이 각자의 방법으로 순회 방법들을 제공했었지만, ES6에서는 공식적으로 Iterator/Iterable Protocol을 적용하여 순차적인 데이터의 순회 방식을 통일시켰습니다.
 
 ## Iterator & Iterator Protocol
 
-Iterator&Iterable Protocol은 아래와 같이 몇가지 규칙을 통하여 연속된 데이터를 순회할 수 있도록 하는 약속입니다.
+배열이나 맵과 같은 컬렉션 데이터에서 ``for...of``나 ``spread`` 및 ``rest``등의 순차적인 데이터 처리와 ``지연 평가``를 사용하려면 Iterator & Iterable Protocol을 지켜야합니다.
 
 - **Iterator**는 ``{value: any, done: boolean}`` 모양의 객체를 리턴하는 ``next()``라는 함수를 가진 값을 말합니다.
 
@@ -18,7 +18,7 @@ Iterator&Iterable Protocol은 아래와 같이 몇가지 규칙을 통하여 연
 
 - **Iterator&Iterable protocol**을 준수하면 순차적으로 데이터를 순회할 수 있게 되어 ``for...of``나 ``spread`` 및 ``rest`` 기능들을 사용할 수 있게 됩니다.
 
-Array, Map, Set과 같은 컬렉션형 객체들은 기본적으로 Iterable로써 Symbol.iterator를 키로 하여 Iterator를 반환하는 함수를 가지고 있으며, 이는 곧 Iterator&Iterable Protocol을 만족한다는 뜻입니다.
+Array, Map, Set과 같은 컬렉션형 객체들은 기본적으로 Iterable로써 ``Symbol.iterator``를 키로 하여 Iterator를 반환하는 함수를 가지고 있으며, 반환된 Iterator의 ``next()``함수를 호출하면 컬렉션의 값들이 차례대로 나오는것을 볼 수 있습니다.
 
 ```js
 // 'Array --------------'
@@ -151,7 +151,7 @@ const iterable = {
     },
 }
 
-// Problem : 첫번째 값은 출력하지 않고, 나머지 값의 합을 출력하고 싶다
+// Problem : 첫번째 값은 사용하지 않고, 나머지 값의 합을 출력하고 싶다
 // iterable은 단순 순회만 가능하므로, iterator로 처리
 
 function removeFirst(itr) {
@@ -194,7 +194,7 @@ const iterable = {
   }
 }
 
-// Problem : 첫번째 값은 출력하지 않고, 나머지 값의 합을 출력하고 싶다
+// Problem : 첫번째 값은 사용하지 않고, 나머지 값의 합을 출력하고 싶다
 
 function removeFirst(itr) {
     return itr.next()
