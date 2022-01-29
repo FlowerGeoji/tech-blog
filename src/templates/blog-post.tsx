@@ -1,28 +1,33 @@
 import * as React from "react"
 import cn from "classnames"
 import { Link, graphql } from "gatsby"
+import L from "lodash/fp"
 
 import Bio from "../components/Bio"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
+import RelatedPosts from "../components/RelatedPosts"
 
 import "../styles/code.scss"
 
 const BlogPostTemplate = ({ data, location }) => {
     const post = data.markdownRemark
     const siteTitle = data.site.siteMetadata?.title || `Title`
-    const { previous, next } = data
+    const { previous, next, related } = data
 
     return (
         <Layout location={location} title={siteTitle}>
             <Seo title={post.frontmatter.title} description={post.frontmatter.description || post.excerpt} />
-            <article className={cn("blog-post", "divide-y")} itemScope itemType="http://schema.org/Article">
+            <article className={cn("blog-post")} itemScope itemType="http://schema.org/Article">
                 <header className={cn("pb-5")}>
                     <h1 itemProp="headline">{post.frontmatter.title}</h1>
                     <span className={cn("text-sm")}>{post.frontmatter.date}</span>
                 </header>
                 <section className={cn("pt-10")} dangerouslySetInnerHTML={{ __html: post.html }} itemProp="articleBody" />
-                <footer>
+
+                <RelatedPosts relatedPosts={L.get("nodes", related)} />
+
+                <footer className={cn("border-t")}>
                     <Bio />
                 </footer>
             </article>
@@ -55,6 +60,7 @@ const NavClassName = cn(
     "py-2",
     "px-4",
     "text-secondary",
+    "font-semibold",
     "bg-secondary",
     "bg-opacity-5",
     "border-secondary",
@@ -64,7 +70,7 @@ const NavClassName = cn(
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-    query BlogPostBySlug($id: String!, $previousPostId: String, $nextPostId: String) {
+    query BlogPostBySlug($id: String!, $previousPostId: String, $nextPostId: String, $related: String) {
         site {
             siteMetadata {
                 title
@@ -94,6 +100,18 @@ export const pageQuery = graphql`
             }
             frontmatter {
                 title
+            }
+        }
+        related: allMarkdownRemark(sort: { order: DESC, fields: frontmatter___date }, filter: { frontmatter: { related: { eq: $related, ne: null } } }) {
+            nodes {
+                id
+                fields {
+                    slug
+                }
+                frontmatter {
+                    title
+                    category
+                }
             }
         }
     }

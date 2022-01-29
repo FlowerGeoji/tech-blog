@@ -7,4 +7,25 @@ interface Social {
     github?: string
 }
 
-interface SiteMetaData {}
+interface SiteMetaData {
+    author?: Author
+    siteUrl?: string
+    social?: Social
+}
+
+interface Frontmatter {
+    title?: string
+    description?: string
+    date?: Date
+    category?: string
+    related?: string
+}
+
+interface Fields {
+    slug: string
+}
+
+interface MarkdownRemark {
+    frontmatter?: Frontmatter
+    fields?: Fields
+}

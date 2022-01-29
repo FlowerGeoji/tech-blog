@@ -1,5 +1,5 @@
 ---
-title: React - Suspense와 비동기 작업(Promise)
+title: Suspense와 비동기 작업(Promise)
 date: 2021-12-25 00:12:70
 category: react
 thumbnail: { thumbnailSrc }

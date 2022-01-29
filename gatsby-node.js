@@ -23,6 +23,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
                         }
                         frontmatter {
                             category
+                            related
                         }
                     }
                 }
@@ -58,6 +59,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
                     id: post.id,
                     previousPostId,
                     nextPostId,
+                    related: post.frontmatter.related,
                 },
             })
         })
@@ -115,6 +117,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: String
       date: Date @dateformat
       category: String
+      related: String
     }
 
     type Fields {
