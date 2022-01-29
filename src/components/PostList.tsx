@@ -10,7 +10,7 @@ interface IPostListProps {
 function PostList({ category }: IPostListProps) {
     const data = useStaticQuery(graphql`
         query PostList {
-            allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+            allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }, filter: { frontmatter: { draft: { eq: false } } }) {
                 nodes {
                     excerpt
                     fields {
