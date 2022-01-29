@@ -1,6 +1,6 @@
 ---
 title: Nextjs runtime 환경변수 설정
-date: 2022-01-09 23:01:03
+date: 2022-01-29 23:01:03
 category: react
 thumbnail: { thumbnailSrc }
 draft: false
