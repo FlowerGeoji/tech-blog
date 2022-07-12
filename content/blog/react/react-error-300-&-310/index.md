@@ -17,13 +17,13 @@ React 애플리케이션을 만들다보면 종종 다음과 같은 오류들을
 
 > [React error 310](https://reactjs.org/docs/error-decoder.html/?invariant=310) - Rendered more hooks than during the previous render.
 
-해당 오류들은 간단하게 말하면, **react hook이 [규칙](https://reactjs.org/docs/hooks-rules.html)에 맞게 실행되지 않아서 발생하는 오류라고 볼 수 있습니다.** 컴포넌트에서 사용중인 hook이 다 실행되기 전에 렌더링이 끝나버린다던지(React erro 300), 직전의 렌더링에서 hook이 실행됬지만 이후의 렌더링에서 실행이 되지 않는 경우(React error 310)라고 볼 수 있습니다. 이번 글에서는 hook을 사용할때 지켜야하는 규칙이 뭔지 그리고, 어떻게 주의하며 사용해야하는지 알아보도록 하겠습니다.
+해당 오류들은 간단하게 말하면, **React Hook이 [규칙](https://reactjs.org/docs/hooks-rules.html)에 맞게 실행되지 않아서 발생하는 오류라고 볼 수 있습니다.** 컴포넌트에서 사용중인 Hook이 다 실행되기 전에 렌더링이 끝나버린다던지(React erro 300), 직전의 렌더링에서 Hook이 실행됬지만 이후의 렌더링에서 실행이 되지 않는 경우(React error 310)라고 볼 수 있습니다. 이번 글에서는 Hook을 사용할때 지켜야하는 규칙이 뭔지 그리고, 어떻게 주의하며 사용해야하는지 알아보도록 하겠습니다.
 
 # Hook 사용 규칙
 
-React 컴포넌트는 hook의 호출 순서로 자신의 상태를 관리하기 때문에, 컴포넌트 내부의 모든 hook들은 매번 렌더링때마다 항상 같이 실행되어야 합니다.(hook이 뒤죽박죽으로 실행되면 상태관리가 되지 않습니다.)
+React 컴포넌트는 Hook의 호출 순서로 자신의 상태를 관리하기 때문에, 컴포넌트 내부의 모든 Hook들은 매번 렌더링때마다 항상 같이 실행되어야 합니다.(Hook이 뒤죽박죽으로 실행되면 상태관리가 되지 않습니다.)
 
-그렇기 때문에 hook을 사용할 때는 [공식문서의 규칙](https://reactjs.org/docs/hooks-rules.html)을 지켜서 사용해야 합니다.
+그렇기 때문에 Hook을 사용할 때는 [Hook 규칙](https://reactjs.org/docs/hooks-rules.html)을 지켜서 사용해야 합니다.
 
 - **Only Call Hooks at the Top Level** - Hook은 컴포넌트의 Top level(가장 위)에서 선언되어야 한다.
 - **Don’t call Hooks inside loops, conditions, or nested functions** - Hook은 반복문이나 조건문 또는 콜백함수 내부에서 선언되서는 안된다.
@@ -105,9 +105,9 @@ function App() {
 }
 ```
 
-## 조건부(if)로 렌더링 또는 hook을 실행하는 경우
+## 조건부(if)로 렌더링 또는 Hook을 실행하는 경우
 
-hook은 조건부(if)로 실행되서는 안됩니다. 조건부로 hook이 실행되면 렌더링 사이클마다 실행되는 hook이 달라지기 때문에 문제가 발생할 수 있습니다.
+Hook은 조건부(if)로 실행되서는 안됩니다. 조건부로 Hook이 실행되면 렌더링 사이클마다 실행되는 Hook이 달라지기 때문에 문제가 발생할 수 있습니다.
 
 ```tsx{4-9}
 function App() {
@@ -147,7 +147,7 @@ setTime(new Date())
 ⛔️ useEffect(()=>{alert(time)}, [time])
 ```
 
-hook은 항상 렌더링 사이클에 맞춰서 실행되어야 하며, 각 렌더링마다 동일한 hook들이 사용되야 합니다. **필요한 조건부나 반복문 또는 콜백함수 로직들은 hook안에서 처리할 수 있도록 해야합니다.**
+Hook은 항상 렌더링 사이클에 맞춰서 실행되어야 하며, 각 렌더링마다 동일한 Hook들이 사용되야 합니다. **필요한 조건부나 반복문 또는 콜백함수 로직들은 Hook안에서 처리할 수 있도록 해야합니다.**
 
 ```tsx{4-9}
 function App() {
