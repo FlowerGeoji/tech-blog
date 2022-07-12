@@ -1,6 +1,7 @@
 ---
 title: Rules of Hooks(feat. React Error 300 & 310)
 date: 2022-07-07 23:07:87
+descripton: Hook 사용 규칙과 Hook을 잘못 사용했을때 어떠한 문제가 있는지 알아보도록 하겠습니다.
 category: react
 thumbnail: { thumbnailSrc }
 draft: false
@@ -10,7 +11,7 @@ draft: false
 
 React 애플리케이션을 만들다보면 종종 다음과 같은 오류들을 만날수가 있습니다.
 
-![suspense-sample](./error-310.png)
+![react-error-310](./error-310.png)
 
 > [React error 300](https://reactjs.org/docs/error-decoder.html/?invariant=300) - Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
 
