@@ -17,7 +17,7 @@ React 애플리케이션을 만들다 보면 종종 다음과 같은 오류들�
 
 > [React error 310](https://reactjs.org/docs/error-decoder.html/?invariant=310) - Rendered more hooks than during the previous render.
 
-해당 오류들은 간단하게 말하면, **React Hook이 [규칙](https://reactjs.org/docs/hooks-rules.html)에 맞게 실행되지 않아서 발생하는 오류라고 볼 수 있습니다.** 컴포넌트에서 사용중인 Hook이 다 실행되기 전에 렌더링이 끝나버린다던지(React erro 300), 직전의 렌더링에서 Hook이 실행됬지만 이후의 렌더링에서 실행이 되지 않는 경우(React error 310)라고 볼 수 있습니다. 이번 글에서는 Hook을 사용할때 지켜야하는 규칙이 뭔지 그리고, 어떻게 주의하며 사용해야하는지 알아보도록 하겠습니다.
+해당 오류들은 간단하게 말하면, **React Hook이 [사용 규칙](https://reactjs.org/docs/hooks-rules.html)에 맞게 실행되지 않아서 발생하는 오류라고 볼 수 있습니다.** 컴포넌트에서 사용중인 Hook이 다 실행되기 전에 렌더링이 끝나버린다던지(React erro 300), 직전의 렌더링에서 Hook이 실행됬지만 이후의 렌더링에서 실행이 되지 않는 경우(React error 310)라고 볼 수 있습니다. 이번 글에서는 Hook을 사용할때 지켜야하는 규칙이 뭔지 그리고, 어떻게 주의하며 사용해야하는지 알아보도록 하겠습니다.
 
 # Hook 사용 규칙
 
