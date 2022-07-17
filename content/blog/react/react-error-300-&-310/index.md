@@ -241,5 +241,9 @@ setTime(new Date())
 // 3. render 함수 호출로 인해 useEffect가 실행됨, 기존에 없었기때문에 상태 파악 불가
 ⛔️ useEffect(() => {
     setFormatedTime(moment.utc(time).local().format("YYYY-MM-DD HH:mm:ss"))
-}, [time])    .
+}, [time])
 ```
+
+# References
+
+- [Rules of Hook] - https://reactjs.org/docs/hooks-rules.html
