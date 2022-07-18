@@ -7,6 +7,7 @@ import Bio from "../components/Bio"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
 import RelatedPosts from "../components/RelatedPosts"
+import Utterances from "../components/Utterances"
 
 import "../styles/code.scss"
 
@@ -28,36 +29,29 @@ const BlogPostTemplate = ({ data, location }) => {
                 <RelatedPosts relatedPosts={L.get("nodes", related)} />
 
                 <footer className={cn("border-t")}>
+                    <nav className="blog-post-nav">
+                        <ul className={cn("flex", "flex-wrap", "justify-between", "list-none", "p-0")}>
+                            <li>
+                                {previous && (
+                                    <Link className={NavClassName} to={previous.fields.slug} rel="prev">
+                                        ← {previous.frontmatter.title}
+                                    </Link>
+                                )}
+                            </li>
+                            <li>
+                                {next && (
+                                    <Link className={NavClassName} to={next.fields.slug} rel="next">
+                                        {next.frontmatter.title} →
+                                    </Link>
+                                )}
+                            </li>
+                        </ul>
+                    </nav>
                     <Bio />
                 </footer>
             </article>
-            <nav className="blog-post-nav">
-                <ul className={cn("flex", "flex-wrap", "justify-between", "list-none", "p-0")}>
-                    <li>
-                        {previous && (
-                            <Link className={NavClassName} to={previous.fields.slug} rel="prev">
-                                ← {previous.frontmatter.title}
-                            </Link>
-                        )}
-                    </li>
-                    <li>
-                        {next && (
-                            <Link className={NavClassName} to={next.fields.slug} rel="next">
-                                {next.frontmatter.title} →
-                            </Link>
-                        )}
-                    </li>
-                </ul>
-            </nav>
-            <script
-                src="https://utteranc.es/client.js"
-                repo="https://github.com/FlowerGeoji/tech-blog"
-                issue-term="pathname"
-                label="utterances"
-                theme="github-light"
-                crossorigin="anonymous"
-                async
-            ></script>
+
+            <Utterances />
         </Layout>
     )
 }
