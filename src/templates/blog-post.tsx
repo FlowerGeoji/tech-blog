@@ -49,6 +49,15 @@ const BlogPostTemplate = ({ data, location }) => {
                     </li>
                 </ul>
             </nav>
+            <script
+                src="https://utteranc.es/client.js"
+                repo="https://github.com/FlowerGeoji/tech-blog"
+                issue-term="pathname"
+                label="utterances"
+                theme="github-light"
+                crossorigin="anonymous"
+                async
+            ></script>
         </Layout>
     )
 }
