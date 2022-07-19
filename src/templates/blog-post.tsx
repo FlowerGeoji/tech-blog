@@ -3,6 +3,7 @@ import cn from "classnames"
 import { Link, graphql } from "gatsby"
 import L from "lodash/fp"
 
+import Adsense from "react-adsense"
 import Bio from "../components/Bio"
 import Layout from "../components/Layout"
 import Seo from "../components/Seo"
@@ -51,6 +52,14 @@ const BlogPostTemplate = ({ data, location }) => {
                 </footer>
             </article>
 
+            <Adsense.Google
+                client="ca-pub-3367639903622741"
+                slot="7800150469"
+                style={{ display: "block" }}
+                format="auto"
+                responsive="true"
+                // layoutKey="-gw-1+2a-9x+5c"
+            />
             <Utterances />
         </Layout>
     )
