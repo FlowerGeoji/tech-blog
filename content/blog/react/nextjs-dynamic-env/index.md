@@ -86,7 +86,7 @@ function fetchUser() {
 }
 ```
 
-하지만 공식 문서를 보면 그렇게 추천하지는 않는것 같고, 환경별로 환경변수들을 작성하기에는 부족한 부분이 있어 보입니다.
+<u>하지만 공식 문서를 보면 그렇게 추천하지는 않는것 같고</u>, 환경별로 환경변수들을 작성하기에는 부족한 부분이 있어 보입니다.
 
 > Generally you'll want to use build-time environment variables to provide your configuration. The reason for this is that runtime configuration adds rendering / initialization overhead and is incompatible with Automatic Static Optimization.
 
@@ -101,7 +101,7 @@ function fetchUser() {
 
 > SSG를 꼭 사용해야하는데...Runtime Configuration 만으로는 부족해 보이는데...
 
-이러한 여러가지 제한때문에 Nextjs에서 런타임 환경변수를 사용하려면 다른 방법을 사용해야합니다. 그중에 하나가 [환경변수 URL](https://dev.to/matt_catalfamo/runtime-configurations-with-react-22dl)입니다. 환경변수를 글로벌 변수에 넣어주는 public script파일을 만들고, 환경변수를 사용하는 클라이언트에서 해당 public 파일을 가져가서 사용하는 방식입니다.
+이러한 여러가지 제한때문에 Nextjs에서 런타임 환경변수를 사용하려면 다른 방법을 사용해야합니다. 그중에 하나가 [환경변수 URL](https://dev.to/matt_catalfamo/runtime-configurations-with-react-22dl)입니다. 환경변수를 public 파일로 만들고, 환경변수를 사용하는 클라이언트에서 해당 public 파일을 가져가서 사용하는 방식입니다.
 
 ##### 1. 런타임에 실행할 js파일을 생성
     
@@ -121,15 +121,15 @@ async function parseDotenv(appEnv) {
 }
 ```
 
-##### 3. 파싱된 환경변수를 클라이언트에서 사용할 수 있도록, ``window`` 객체에 저장하는 javascript파일을 생성
+##### 3. 파싱된 환경변수를 클라이언트에서 사용할 수 있도록, ``public``폴더에 json파일로 저장
 
 ```js
 const fs = require("fs")
 
 function writeENV(parsedEnv) {
-    const destFilePath = `${fs.realpathSync(process.cwd())}/public/__ENV.js`
+    const destFilePath = `${fs.realpathSync(process.cwd())}/public/__ENV.json`
 
-    fs.writeFileSync(destFilePath, `window.__ENV = ${JSON.stringify(parsedEnv)}`)
+    fs.writeFileSync(destFilePath, JSON.stringify(parsedEnv))
     
     return parsedEnv
 }
@@ -209,40 +209,36 @@ APP_ENV=dev yarn start
 
 ##### 6. 환경변수 URL사용하기
 
-위와 같은 cli를 작성하여 실행하면 public 폴더에 환경변수를 주입해주는 파일이 생성되고 .env파일이 복사된것을 볼 수 있습니다.
+위와 같은 cli를 작성하여 실행하면 public 폴더에 환경변수 Json 파일이 생성되고 .env파일이 복사된것을 볼 수 있습니다.
 
-![public-envfile](./public-envfile.png)
+![public-envfile](./public-env-jsonfile.png)
 
 ![dotenvfile](./dotenvfile.png)
 
-이렇게 만들어진 public 환경변수 스크립트 파일을 클라이언트에서 가져가서 사용하도록 해줍니다.
+CSR(Client Side Rendering) 방식일 경우 만들어진 public 파일을 ``<script/>`` 태그로 미리 가져가서 전역변수(``window``)에 등록하여 사용해도 되지만, Nextjs와 같이 SSR(Server Side Rendering)을 사용할 경우에는 Hydration오류가 발생할 수 있기때문에, **hook이나 promise를 통하여 비동기적으로 만들어진 public 환경변수 Json 파일을 클라이언트에서 가져가서 사용하도록 해줍니다.**
 
-```jsx
-class MyDocument extends Document {
-    render() {
-        return (
-            <Html>
-                <Head>
-                    <script src="/__ENV.js" />
-                </Head>
-                <body>
-                    <Main />
-                    <NextScript />
-                </body>
-            </Html>
-        )
-    }
-}
-```
+(CSR방식을 사용중이라면 [여기](https://dev.to/matt_catalfamo/runtime-configurations-with-react-22dl)를 참고하시면 됩니다.)
 
-그러면 클라이언트에서는 ``window`` 객체를 통해 환경변수를 사용할 수 있게되고, 서버에서는 nexjts가 실행될때 ``.env`` 파일을 파싱하게되어 ``process.env`` 객체를 통해 환경변수를 사용할 수 있게됩니다.
+```tsx
+let __ENV: { string: string } = undefined
 
-```ts
-export default function env(envName: string): string {
+export default async function runtimeEnv(envName: string) {
     if (isClientBrowser()) {
-        return window.__ENV[envName]
+        if (!__ENV) {
+            return axios
+                .create({})
+                .get("/__ENV.json")
+                .then((response) => {
+                    __ENV = JSON.parse(response.data)
+                })
+        }
+
+        return __ENV[keys]
     } else {
         return process.env[envName]
     }
 }
 ```
+
+그러면 클라이언트에서는 __ENV.json 객체를 통해 환경변수를 사용할 수 있게되고, 서버에서는 nexjts가 실행될때 ``.env`` 파일을 파싱하게되어 ``process.env`` 객체를 통해 환경변수를 사용할 수 있게됩니다.
+
