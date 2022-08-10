@@ -5,12 +5,13 @@ import PostItem from "../components/PostItem"
 
 interface ICategoriesProps {
     relatedPosts?: MarkdownRemark[]
+    className?: string
 }
 
-function Categories({ relatedPosts }: ICategoriesProps) {
+function Categories({ relatedPosts, className }: ICategoriesProps) {
     return (
-        <section className={cn("py-10", { hidden: L.isEmpty(relatedPosts) })}>
-            <h1 className={cn("mt-10")}>Related Posts</h1>
+        <section className={cn("py-10", className, { hidden: L.isEmpty(relatedPosts) })}>
+            <h1 className={cn("mt-0")}>Related Posts</h1>
             <ul className={cn("px-10")}>
                 {L.map(
                     relatedPost => (

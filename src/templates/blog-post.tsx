@@ -27,7 +27,7 @@ const BlogPostTemplate = ({ data, location }) => {
                 </header>
                 <section className={cn("pt-10")} dangerouslySetInnerHTML={{ __html: post.html }} itemProp="articleBody" />
 
-                <RelatedPosts relatedPosts={L.get("nodes", related)} />
+                <RelatedPosts className={cn("border-t", "mt-10")} relatedPosts={L.get("nodes", related)} />
 
                 <footer className={cn("border-t")}>
                     <nav className="blog-post-nav">
