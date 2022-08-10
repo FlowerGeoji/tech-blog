@@ -2,13 +2,15 @@ import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import L from "lodash/fp"
 import cn from "classnames"
+import Adsense from "react-adsense"
+import PostItem from "./PostItem"
 
 interface IPostListProps {
     category?: string
 }
 
 function PostList({ category }: IPostListProps) {
-    const data = useStaticQuery(graphql`
+    const data = useStaticQuery<{ allMarkdownRemark: AllMarkdownRemark }>(graphql`
         query PostList {
             allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }, filter: { frontmatter: { draft: { eq: false } } }) {
                 nodes {
@@ -43,31 +45,9 @@ function PostList({ category }: IPostListProps) {
     return (
         <ol className={cn("list-none", "px-8", "divide-y")}>
             {posts.map(post => {
-                const title = post.frontmatter.title || post.fields.slug
-
                 return (
                     <li key={post.fields.slug}>
-                        <Link to={post.fields.slug} itemProp="url">
-                            <article className={cn("post-list-item", "hover:text-shadow")} itemScope itemType="http://schema.org/Article">
-                                <header>
-                                    <h3>
-                                        <span itemProp="headline" className={cn("text-gray-700")}>
-                                            {title}
-                                        </span>
-                                    </h3>
-                                    <small className={cn("text-light")}>{post.frontmatter.date}</small>
-                                </header>
-                                <section>
-                                    <p
-                                        dangerouslySetInnerHTML={{
-                                            __html: post.frontmatter.description || post.excerpt,
-                                        }}
-                                        itemProp="description"
-                                        className={cn("text-summary", "font-semibold")}
-                                    />
-                                </section>
-                            </article>
-                        </Link>
+                        <PostItem post={post} />
                     </li>
                 )
             })}

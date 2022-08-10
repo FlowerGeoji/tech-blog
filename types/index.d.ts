@@ -26,6 +26,11 @@ interface Fields {
 }
 
 interface MarkdownRemark {
+    excerpt?: string
     frontmatter?: Frontmatter
     fields?: Fields
+}
+
+interface AllMarkdownRemark {
+    nodes?: MarkdownRemark[]
 }

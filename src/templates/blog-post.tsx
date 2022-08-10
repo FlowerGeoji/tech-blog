@@ -114,15 +114,21 @@ export const pageQuery = graphql`
                 title
             }
         }
-        related: allMarkdownRemark(sort: { order: DESC, fields: frontmatter___date }, filter: { frontmatter: { related: { eq: $related, ne: null } } }) {
+        related: allMarkdownRemark(
+            sort: { order: DESC, fields: frontmatter___date }
+            filter: { id: { ne: $id }, frontmatter: { related: { eq: $related, ne: null } } }
+        ) {
             nodes {
                 id
                 fields {
                     slug
                 }
+                excerpt
                 frontmatter {
                     title
                     category
+                    description
+                    date(formatString: "YYYY/MM/DD")
                 }
             }
         }

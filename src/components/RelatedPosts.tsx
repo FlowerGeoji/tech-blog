@@ -1,7 +1,7 @@
 import React from "react"
-import { Link } from "gatsby"
 import L from "lodash/fp"
 import cn from "classnames"
+import PostItem from "../components/PostItem"
 
 interface ICategoriesProps {
     relatedPosts?: MarkdownRemark[]
@@ -10,15 +10,11 @@ interface ICategoriesProps {
 function Categories({ relatedPosts }: ICategoriesProps) {
     return (
         <section className={cn("py-10", { hidden: L.isEmpty(relatedPosts) })}>
-            <h5 className={cn("mt-0")}>Related Posts</h5>
+            <h1 className={cn("mt-10")}>Related Posts</h1>
             <ul className={cn("px-10")}>
                 {L.map(
                     relatedPost => (
-                        <li className={"list-none"}>
-                            <Link className={NavClassName} to={L.get("fields.slug", relatedPost)}>
-                                {`${L.upperFirst(L.get("frontmatter.category", relatedPost))} - ${L.get("frontmatter.title", relatedPost)}`}
-                            </Link>
-                        </li>
+                        <PostItem post={relatedPost} />
                     ),
                     relatedPosts
                 )}
