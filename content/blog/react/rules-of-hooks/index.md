@@ -4,7 +4,6 @@ date: 2022-07-12 23:07:87
 description: Hook 사용 규칙과 Hook을 잘못 사용했을 때 어떠한 문제가 있는지 알아보도록 하겠습니다.
 category: react
 thumbnail: { thumbnailSrc }
-related: rules-of-hooks
 draft: false
 ---
 
@@ -173,7 +172,7 @@ function App() {
 
 ## Render Props를 조심하자
 
-[Render Props](https://reactjs.org/docs/render-props.html) 방식에서도 Hook 사용은 조심해야 합니다. Render Props는 컴포넌트에 React element를 반환하는 함수를 프로퍼티로 전달(children이 아닌) 하여 좀 더 자유로운 렌더링 로직을 구현할 수 있게 하지만, 한 가지 주의해야 할 것이 있습니다.
+[Render Props](https://flowergeoji.me/react/react-pattern-render-props/) 방식에서도 Hook 사용은 조심해야 합니다. Render Props는 컴포넌트에 React element를 반환하는 함수를 프로퍼티로 전달(children이 아닌) 하여 좀 더 자유로운 렌더링 로직을 구현할 수 있게 하지만, 한 가지 주의해야 할 것이 있습니다.
 
 React Node 형태(children)로 렌더링을 호출하지 않고, Render Props 방식처럼 함수 호출로 렌더링을 하게 되면 **Component가 아니기 때문에 별도의 라이플 사이클을 가지지 않게 됩니다. 즉, Render Props 방식의 함수 호출은 일반적인 함수 호출과 동일하다는 의미가 되고, 해당 함수에서는 Hook을 사용하면 안 된다는 의미가 됩니다.(Only Call Hooks from React Functions, Don’t call Hooks from regular JavaScript functions)**
 
