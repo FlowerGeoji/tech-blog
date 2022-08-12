@@ -1,9 +1,9 @@
 ---
-title: Render props 사용시 주의할 점
+title: React Pattern - Render props
 date: 2022-07-18 21:43:91
 category: react
 thumbnail: { thumbnailSrc }
-related: rules-of-hooks
+related: react-pattern
 draft: false
 ---
 

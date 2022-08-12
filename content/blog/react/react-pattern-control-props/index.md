@@ -1,9 +1,10 @@
 ---
-title: React - Control Props Pattern
+title: React Pattern - Control Props Pattern
 date: 2022-08-08 23:50:80
 category: react
 thumbnail: { thumbnailSrc }
 draft: false
+related: react-pattern
 ---
 
 React 작업을 하다 보면 간혹 다음과 같은 경고나 오류 문구를 볼 수 있는데, 이는 제어 컴포넌트(Controlled Component)를 잘못 사용했을 때 뜨는 경고나 오류입니다. 오늘 포스팅에서는 제어 컴포넌트가 무엇인지 그리고 제어 컴포넌트를 만드는 방법에 대해 이야기해 보겠습니다.
