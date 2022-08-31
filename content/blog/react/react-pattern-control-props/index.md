@@ -11,8 +11,6 @@ React 작업을 하다 보면 간혹 다음과 같은 경고나 오류 문구를
 
 ![controlled-value-error](./controlled-value-error.png)
 
-
-
 # Control Props Pattern
 
 Control Props Pattern은 props를 통해 외부에서 컴포넌트의 상태를 제어(Controlled Component) 할 수 있도록 만드는 방법입니다. 
