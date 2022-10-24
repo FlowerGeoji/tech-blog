@@ -40,6 +40,8 @@ const Layout = ({ location, title, children }) => {
                     </div>
                 </footer>
             </div>
+            {/* kakao adfit */}
+            <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
         </>
     )
 }
