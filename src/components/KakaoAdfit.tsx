@@ -16,7 +16,7 @@ const KakaoAdfit: React.FC<IKakaoAdfitProps> = function (props) {
     return (
         <ins
             className={cn("kakao_ad_area", className)}
-            style={{ display: "none", ...style }}
+            style={style}
             data-ad-unit={adUnit}
             data-ad-width={L.toNumber(adWidth)}
             data-ad-height={L.toNumber(adHeight)}
