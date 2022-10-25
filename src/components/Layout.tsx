@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
 import cn from "classnames"
-import KakaoAdfit from "./KakaoAdfit"
 
 const Layout = ({ location, title, children }) => {
     // @ts-ignore
@@ -15,7 +14,6 @@ const Layout = ({ location, title, children }) => {
                     {title}
                 </Link>
             </header>
-            <KakaoAdfit adUnit={"DAN-g54XFc5zmIhKyNJr"} adWidth={728} adHeight={90} style={{ display: "none" }} />
             <div className="global-wrapper" data-is-root-path={isRootPath}>
                 <main>{children}</main>
                 <footer className={cn("flex", "flex-col", "items-center", "text-sm", "text-light", "py-14")}>

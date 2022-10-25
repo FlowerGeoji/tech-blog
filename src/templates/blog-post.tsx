@@ -9,6 +9,7 @@ import Layout from "../components/Layout"
 import Seo from "../components/Seo"
 import RelatedPosts from "../components/RelatedPosts"
 import Utterances from "../components/Utterances"
+import KakaoAdfit from "../components/KakaoAdfit"
 
 import "../styles/code.scss"
 
@@ -25,6 +26,11 @@ const BlogPostTemplate = ({ data, location }) => {
                     <h1 itemProp="headline">{post.frontmatter.title}</h1>
                     <span className={cn("text-sm")}>{post.frontmatter.date}</span>
                 </header>
+
+                <div className={cn("flex", "items-center", "justify-center")}>
+                    <KakaoAdfit adUnit={"DAN-g54XFc5zmIhKyNJr"} adWidth={728} adHeight={90} style={{ display: "none" }} />
+                </div>
+
                 <section className={cn("pt-10")} dangerouslySetInnerHTML={{ __html: post.html }} itemProp="articleBody" />
 
                 <RelatedPosts className={cn("border-t", "mt-10")} relatedPosts={L.get("nodes", related)} />
