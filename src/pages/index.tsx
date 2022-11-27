@@ -8,7 +8,7 @@ import Categories from "../components/Categories"
 import PostList from "../components/PostList"
 import KakaoAdfit from "../components/KakaoAdfit"
 
-if (window) {
+if (typeof window !== "undefined") {
     window.addEventListener("beforeinstallprompt", function (event) {
         event.preventDefault()
         console.log("beforeinstallprompt", event)
