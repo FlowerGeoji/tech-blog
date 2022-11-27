@@ -8,10 +8,12 @@ import Categories from "../components/Categories"
 import PostList from "../components/PostList"
 import KakaoAdfit from "../components/KakaoAdfit"
 
-window.addEventListener("beforeinstallprompt", function (event) {
-    event.preventDefault()
-    console.log("beforeinstallprompt", event)
-})
+if (window) {
+    window.addEventListener("beforeinstallprompt", function (event) {
+        event.preventDefault()
+        console.log("beforeinstallprompt", event)
+    })
+}
 
 const BlogIndex = ({ data, location }) => {
     const siteTitle = data.site.siteMetadata?.title || `Title`
