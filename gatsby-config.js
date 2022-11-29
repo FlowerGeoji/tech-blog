@@ -176,7 +176,7 @@ module.exports = {
             options: {
                 name: `FlowerGeoji Tech Blog`,
                 short_name: `FG-TechBlog`,
-                start_url: `/`,
+                start_url: `/react/remove-implicitly-typed-children/`,
                 // This will impact how browsers show your PWA/website
                 // https://css-tricks.com/meta-theme-color-and-trickery
                 background_color: `#ffffff`,
