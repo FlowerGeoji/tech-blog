@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import L from "lodash/fp"
+import { isEmpty, isNil, map, equals, path } from "ramda"
 import cn from "classnames"
 
 interface ICategoriesProps {
@@ -18,7 +18,7 @@ function Categories({ onClickCategory }: ICategoriesProps) {
         }
     `)
 
-    const _categories: string[] = L.get("site.siteMetadata.categories", _data)
+    const _categories: string[] = path(["site", "siteMetadata", "categories"], _data)
 
     const [_category, _setCategory] = useState<string>()
 
@@ -43,12 +43,12 @@ function Categories({ onClickCategory }: ICategoriesProps) {
                     "border-opacity-70"
                 )}
             >
-                <button className={ButtonClass({ selected: L.isEmpty(_category) })} onClick={() => _onClickCategory()}>
+                <button className={ButtonClass({ selected: isEmpty(_category) || isNil(_category) })} onClick={() => _onClickCategory()}>
                     All
                 </button>
-                {L.map(category => {
+                {map(category => {
                     return (
-                        <button key={category} className={ButtonClass({ selected: L.isEqual(category, _category) })} onClick={() => _onClickCategory(category)}>
+                        <button key={category} className={ButtonClass({ selected: equals(category, _category) })} onClick={() => _onClickCategory(category)}>
                             {category}
                         </button>
                     )

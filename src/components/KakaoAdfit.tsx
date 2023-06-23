@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import L from "lodash/fp"
+import { toString } from "ramda"
 import cn from "classnames"
 
 interface IKakaoAdfitProps {
@@ -28,8 +28,8 @@ const KakaoAdfit: React.FC<IKakaoAdfitProps> = function (props) {
                 className={cn("kakao_ad_area", className)}
                 style={style}
                 data-ad-unit={adUnit}
-                data-ad-width={L.toString(adWidth)}
-                data-ad-height={L.toString(adHeight)}
+                data-ad-width={toString(adWidth)}
+                data-ad-height={toString(adHeight)}
             ></ins>
         </div>
     )

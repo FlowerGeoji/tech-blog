@@ -1,8 +1,8 @@
 import React from "react"
-import { useStaticQuery, graphql, Link } from "gatsby"
-import L from "lodash/fp"
+import { useStaticQuery, graphql } from "gatsby"
+import { isEmpty, isNil, filter, equals } from "ramda"
 import cn from "classnames"
-import Adsense from "react-adsense"
+// import Adsense from "react-adsense"
 import PostItem from "./PostItem"
 
 interface IPostListProps {
@@ -29,9 +29,10 @@ function PostList({ category }: IPostListProps) {
         }
     `)
 
-    const posts = L.isEmpty(category)
-        ? data.allMarkdownRemark.nodes
-        : L.filter(node => L.isEqual(node.frontmatter.category, category), data.allMarkdownRemark.nodes)
+    const posts =
+        isEmpty(category) || isNil(category)
+            ? data.allMarkdownRemark.nodes
+            : filter(node => equals(node.frontmatter.category, category), data.allMarkdownRemark.nodes)
 
     if (posts.length === 0) {
         return (
@@ -46,9 +47,21 @@ function PostList({ category }: IPostListProps) {
         <ol className={cn("list-none", "px-8", "divide-y")}>
             {posts.map(post => {
                 return (
-                    <li key={post.fields.slug}>
-                        <PostItem post={post} />
-                    </li>
+                    <>
+                        <li key={post.fields.slug}>
+                            <PostItem post={post} />
+                        </li>
+                        {/* <li>
+                            <Adsense.Google
+                                client="ca-pub-3367639903622741"
+                                slot="5978578546"
+                                style={{ display: "block" }}
+                                format="fluid"
+                                responsive="true"
+                                layoutKey="--ez+64+31-d5+c4"
+                            />
+                        </li> */}
+                    </>
                 )
             })}
         </ol>

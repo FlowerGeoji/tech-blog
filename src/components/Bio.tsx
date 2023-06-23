@@ -7,7 +7,7 @@
 
 import * as React from "react"
 import cn from "classnames"
-import L from "lodash/fp"
+import { toPairs, map } from "ramda"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
@@ -51,14 +51,14 @@ const Bio = () => {
                 </Link>
                 <span className={cn("mt-1", "text-sm", "text-summary", "font-semibold")}>{author.summary}</span>
                 <div className={cn("flex", "flex-row", "space-x-2")}>
-                    {L.pipe(
-                        L.toPairs,
-                        L.map(([key, url]) => (
+                    {map(
+                        ([key, url]) => (
                             <a key={key} href={url} target={"_blank"} className={cn("text-primary", "text-sm", "font-semibold")}>
                                 {"✤ " + key}
                             </a>
-                        ))
-                    )(social)}
+                        ),
+                        toPairs(social ?? {})
+                    )}
                 </div>
             </div>
         </div>

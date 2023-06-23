@@ -1,7 +1,7 @@
 import * as React from "react"
 import cn from "classnames"
 import { Link, graphql } from "gatsby"
-import L from "lodash/fp"
+import { prop } from "ramda"
 
 import Adsense from "react-adsense"
 import Bio from "../components/Bio"
@@ -33,7 +33,7 @@ const BlogPostTemplate = ({ data, location }) => {
 
                 <section className={cn("pt-10")} dangerouslySetInnerHTML={{ __html: post.html }} itemProp="articleBody" />
 
-                <RelatedPosts className={cn("border-t", "mt-10")} relatedPosts={L.get("nodes", related)} />
+                <RelatedPosts className={cn("border-t", "mt-10")} relatedPosts={prop("nodes", related)} />
 
                 <footer className={cn("border-t")}>
                     <nav className="blog-post-nav">

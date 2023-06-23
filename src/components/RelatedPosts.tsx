@@ -1,5 +1,5 @@
 import React from "react"
-import L from "lodash/fp"
+import { isEmpty, map } from "ramda"
 import cn from "classnames"
 import PostItem from "../components/PostItem"
 
@@ -8,12 +8,12 @@ interface ICategoriesProps {
     className?: string
 }
 
-function Categories({ relatedPosts, className }: ICategoriesProps) {
+function Categories({ relatedPosts = [], className }: ICategoriesProps) {
     return (
-        <section className={cn("py-10", className, { hidden: L.isEmpty(relatedPosts) })}>
+        <section className={cn("py-10", className, { hidden: isEmpty(relatedPosts) })}>
             <h1 className={cn("mt-0")}>Related Posts</h1>
             <ul className={cn("px-10")}>
-                {L.map(
+                {map(
                     relatedPost => (
                         <PostItem post={relatedPost} />
                     ),
