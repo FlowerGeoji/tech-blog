@@ -69,11 +69,7 @@ export default function App() {
 }
 ```
 
-<div style="border: solid 1px; margin-bottom: 2rem;">
-
-![suspense-sample](./suspense-sample1.gif)
-
-</div>
+<div style={{ border: "solid 1px", marginBottom: "2rem" }}>![suspense-sample](./suspense-sample1.gif)</div>
 
 ---
 
@@ -81,9 +77,9 @@ export default function App() {
 
 React에서 일반적으로 렌더링 시 비동기 작업 처리를 어떻게 할까요? [React 문서](https://reactjs.org/docs/concurrent-mode-suspense.html#traditional-approaches-vs-suspense)에서는 컴포넌트 라이프 사이클이나 훅(hook)을 이용하는 방법(2가지)과 Suspense를 이용하는 방법이 있다고 이야기합니다.
 
-- **Fetch-on-render (for example, fetch in useEffect)**: 컴포넌트 렌더링을 먼저 시작하고 ``useEffect``나 ``componentDidMount``로 비동기 처리를 합니다.
-- **Fetch-then-render (for example, Relay without Suspense)**: ``useEffect``나 ``componentDidMount``로 화면을 그리는데 필요한 데이터를 모두 조회한 후 렌더링을 시작합니다.
-- **Render-as-you-fetch (for example, Relay with Suspense)**: 비동기 작업과 렌더링을 동시에 시작합니다. Suspense는 초기에 ``fallback`` 프로퍼티를 렌더링하고, 비동기 작업이 완료되면 자식 컴포넌트를 다시 렌더링합니다.
+-   **Fetch-on-render (for example, fetch in useEffect)**: 컴포넌트 렌더링을 먼저 시작하고 `useEffect`나 `componentDidMount`로 비동기 처리를 합니다.
+-   **Fetch-then-render (for example, Relay without Suspense)**: `useEffect`나 `componentDidMount`로 화면을 그리는데 필요한 데이터를 모두 조회한 후 렌더링을 시작합니다.
+-   **Render-as-you-fetch (for example, Relay with Suspense)**: 비동기 작업과 렌더링을 동시에 시작합니다. Suspense는 초기에 `fallback` 프로퍼티를 렌더링하고, 비동기 작업이 완료되면 자식 컴포넌트를 다시 렌더링합니다.
 
 **Fetch-on-render** 또는 **Fetch-then-render** 방식으로 비동기 작업을 처리하면 여러가지 어려움들이 있는데요. 어떠한 어려움들이 있는지 살펴보고 **Suspense**를 사용하면 어떻게 달라지는지 이야기해 보도록 하겠습니다.
 
@@ -154,11 +150,13 @@ function Todos({ puid }: { puid: number }) {
 
 비동기 작업을 사용하는 가장 큰 이유는 **동시성**을 통하여 **효율성**을 얻는 것인데요. **동기화 처리**를 하다 보면 이 동시성을 포기하고 효율성이 떨어지는 상황에 처하게 됩니다.
 
-<div style="border: solid 1px; margin-bottom: 2rem;">
+<div style={{border: "solid 1px", marginBottom: "2rem"}}>
 
-<img src="./synchronizing-log.png" alt="synchronizing-sample"/>
+<img src="./synchronizing-log.png" alt="synchronizing-sample" />
 
-<span style="display: block; text-align: center; font-weight: bold; color: #666666; font-size: 0.9rem;">[fetchTodos는 fetchUser와 User렌더링 작업이 끝나야만 진행됨]</span>
+<span style={{ display: "block", textAlign: "center", fontWeight: "bold", color: "#666666", fontSize: "0.9rem" }}>
+    [fetchTodos는 fetchUser와 User렌더링 작업이 끝나야만 진행됨]
+</span>
 
 </div>
 
@@ -170,28 +168,28 @@ function Todos({ puid }: { puid: number }) {
 
 ```js
 function User({ uid }) {
-  // User Component의 역할이 불명확함(user도 조회하고, todos도 조회)
-  // 비동기 작업이 늘어날수록, User의 역할이 너무 커진다(결합도 증가)
-  const [user, setUser] = useState({});
-  const [todos, setTodos] = useState([]);
+    // User Component의 역할이 불명확함(user도 조회하고, todos도 조회)
+    // 비동기 작업이 늘어날수록, User의 역할이 너무 커진다(결합도 증가)
+    const [user, setUser] = useState({})
+    const [todos, setTodos] = useState([])
 
-  // Fetch-then-render
-  useEffect(() => {
-    // 비동기 작업 동시적으로 실행
-    Promise.all([fetchUser(uid), fetchTodos(uid)]).then(([user, todos]) => {
-      setUser(user);
-      setTodos(todos);
-    });
-  }, [uid]);
+    // Fetch-then-render
+    useEffect(() => {
+        // 비동기 작업 동시적으로 실행
+        Promise.all([fetchUser(uid), fetchTodos(uid)]).then(([user, todos]) => {
+            setUser(user)
+            setTodos(todos)
+        })
+    }, [uid])
 
-  // 경쟁 상태 발생하지 않음
-  return (
-    <>
-      <h3>{user?.displayName}</h3>
-      <p>{user?.description}</p>
-      <Todos todos={todos} />
-    </>
-  );
+    // 경쟁 상태 발생하지 않음
+    return (
+        <>
+            <h3>{user?.displayName}</h3>
+            <p>{user?.description}</p>
+            <Todos todos={todos} />
+        </>
+    )
 }
 ```
 
@@ -252,9 +250,9 @@ function Todos({ puid }: { puid: number }) {
 
 이전의 비동기 처리와 비교하면 어떤가요?
 
-- 컴포넌트들이 각자 데이터 fetching을 동시에 시작하게 되어 **waterfall 문제가 발생하지 않습니다.**
-- Suspense의 계층구조와 fallback 렌더링으로 컴포넌트들은 **더 이상 경쟁 상태를 신경 쓰지 않아도 됩니다.**
-- 컴포넌트들의 역할이 아주 명확하게 분리되고 **결합도가 낮아집니다.**(이제 컴포넌트들은 각자의 데이터를 가져와서 보여주는 것에만 신경 쓰면 됩니다!)
-- 동기화 코드가 사라지고 데이터 fetching과 렌더링에만 신경 쓰면 되기 때문에 컴포넌트들의 **복잡도가 낮아졌습니다.**(코드가 깔끔해졌습니다!)
+-   컴포넌트들이 각자 데이터 fetching을 동시에 시작하게 되어 **waterfall 문제가 발생하지 않습니다.**
+-   Suspense의 계층구조와 fallback 렌더링으로 컴포넌트들은 **더 이상 경쟁 상태를 신경 쓰지 않아도 됩니다.**
+-   컴포넌트들의 역할이 아주 명확하게 분리되고 **결합도가 낮아집니다.**(이제 컴포넌트들은 각자의 데이터를 가져와서 보여주는 것에만 신경 쓰면 됩니다!)
+-   동기화 코드가 사라지고 데이터 fetching과 렌더링에만 신경 쓰면 되기 때문에 컴포넌트들의 **복잡도가 낮아졌습니다.**(코드가 깔끔해졌습니다!)
 
 Suspense를 사용함으로써 컴포넌트들을 훨씬 더 선언적이고 깔끔하게 작성할 수 있는 것을 볼 수 있습니다.

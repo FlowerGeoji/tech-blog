@@ -6,17 +6,17 @@ thumbnail: { thumbnailSrc }
 draft: false
 ---
 
-올해(2022년) React 18버전이 출시되면서 몇 가지 변경점과 새로운 기능들이 추가되어는 데요, React 관련 타입 정의에서도 BREAKING CHANGES가 몇 가지 있었습니다. 이번 포스팅에서는 그중에서도 ``React.FC``에서 ``children`` 타입이 제거된 것에 대해서 이야기해 보겠습니다.
+올해(2022년) React 18버전이 출시되면서 몇 가지 변경점과 새로운 기능들이 추가되어는 데요, React 관련 타입 정의에서도 BREAKING CHANGES가 몇 가지 있었습니다. 이번 포스팅에서는 그중에서도 `React.FC`에서 `children` 타입이 제거된 것에 대해서 이야기해 보겠습니다.
 
 # Remove implicitly type children
 
 React 18 타입 정의에서는 [PR](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/46691)에서 이야기한 대로 Functional Component에서 기본 내장 타입에서 children을 제거됐습니다.
 
-<div style="border: solid 1px; margin: 1rem 0;">
-    <img src="./children-error.png"/>
+<div style={{ border: "solid 1px", margin: "1rem 0" }}>
+    <img src="./children-error.png" />
 </div>
 
-위 사진처럼 React 18에서는 ``React.FC``에서 ``children`` 타입이 제거된 것을 볼 수 있으며, ``children``을 사용하려면 직접 타입 정의를 해줘야 합니다.
+위 사진처럼 React 18에서는 `React.FC`에서 `children` 타입이 제거된 것을 볼 수 있으며, `children`을 사용하려면 직접 타입 정의를 해줘야 합니다.
 
 ```tsx
 interface IRemovalOfImpliciChildrenProps {
@@ -63,8 +63,8 @@ const Card = function ({ text }: ICardProps) {
 
 그런데 여기서 만약에 React 18버전 이전의 `React.FC` 타입을 선언하게 되면 어떻게 될까요?
 
-<div style="border: solid 1px; margin: 1rem 0;">
-    <img src="./react-fc-diffrent.png"/>
+<div style={{ border: "solid 1px", margin: "1rem 0" }}>
+    <img src="./react-fc-diffrent.png" />
 </div>
 
 위의 예제에서 볼 수 있듯이, `React.FC` 타입에는 `children`이 내장 프로퍼티 타입으로 존재하기 때문에 자동으로 프로퍼티를 사용할 수 있으며 `React.FC` 타입 선언을 하지 않으면 `children` 타입을 사용할 수 없는 것을 볼 수 있습니다. 둘 다 동일하게 함수형 컴포넌트이고 구현체도 동일하지만 `React.FC` 타입을 사용하는 것만으로 차이점이 발생하게 되고 결과물에 일관되지 않게 됩니다.
@@ -131,6 +131,6 @@ const StringChildren: React.FC<IStringChildrenProps> = function (props) {
 }
 ```
 
-<div style="border: solid 1px; margin: 1rem 0;">
-    <img src="./react18-fc-example.png"/>
+<div style={{ border: "solid 1px", margin: "1rem 0" }}>
+    <img src="./react18-fc-example.png" />
 </div>

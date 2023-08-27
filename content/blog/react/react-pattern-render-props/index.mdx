@@ -7,13 +7,13 @@ related: react-pattern
 draft: false
 ---
 
- 안녕하세요. 오늘은 프로젝트 진행중에 Render Props를 잘못 사용해서 고생했던 이야기를 해보고자 합니다. 정확하게 Render Props가 무엇인지, 그리고 어떻게 주의해서 사용해야하는지 알아보겠습니다.
+안녕하세요. 오늘은 프로젝트 진행중에 Render Props를 잘못 사용해서 고생했던 이야기를 해보고자 합니다. 정확하게 Render Props가 무엇인지, 그리고 어떻게 주의해서 사용해야하는지 알아보겠습니다.
 
 # Render Props
 
 > The term "render props" refers to a technique for sharing code between React components using a prop whose value is a function
 
-Render Props 방식은 간단하게 말하자면 React 컴포넌트 ``props``에 ``render function``을 포함시켜 전달하는 방법이며, ``render function``은 React 엘리먼트를 반환하는 함수입니다. 즉, 컴포넌트는 자기자신이 렌더링 로직을 포함하는 대신에 외부로부터 렌더링 로직(``render function``)을 전달받아서 처리할 수 있게됩니다.
+Render Props 방식은 간단하게 말하자면 React 컴포넌트 `props`에 `render function`을 포함시켜 전달하는 방법이며, `render function`은 React 엘리먼트를 반환하는 함수입니다. 즉, 컴포넌트는 자기자신이 렌더링 로직을 포함하는 대신에 외부로부터 렌더링 로직(`render function`)을 전달받아서 처리할 수 있게됩니다.
 
 코드의 재사용성을 높이고, 컴포넌트간에 Cross-Cutting Concerns(횡단 관심사, 공통 관심사)를 처리할때 주로 사용됩니다.
 
@@ -114,7 +114,7 @@ export default function RenderPropsError() {
     ])
 
     /* ------- */
-    
+
 }
 ```
 
@@ -179,22 +179,13 @@ return (
 
 [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)로 확인해보면 **함수호출 시에는 반환된 엘리먼트가 React Node로 구성되지 않는것을 확인할 수 있습니다.**
 
-<div style="border: solid 1px;">
+<div style={{ border: "solid 1px" }}>![call-component](./call-component.png "title")</div>
 
-![call-component](./call-component.png "title")
+_React-Dev tools : Component 호출_
 
-</div>
+<div style={{ border: "solid 1px" }}>![call-function](./call-function.png)</div>
 
-*React-Dev tools : Component 호출*
-
-
-<div style="border: solid 1px;">
-
-![call-function](./call-function.png)
-
-</div>
-
-*React-Dev tools : Function 호출*
+_React-Dev tools : Function 호출_
 
 일반적인 함수호출은 React 엘리먼트만 반환할뿐 자체적으로 라이프사이클과 상태를 가지지 않기때문에 컴포넌트가 될수 없고, React Node를 구성할 수 없습니다.
 
@@ -209,12 +200,12 @@ function RenderNameTableData(props: { data: any }) {
 ```
 
 ![hook-error](./hook-error.png "title")
-*예상치 못하게 hook이 더 사용되서 발생하는 오류*
+_예상치 못하게 hook이 더 사용되서 발생하는 오류_
 
 이처럼 Render Props를 사용할때는 컴포넌트 내부에서 렌더링 결과물을 반환하다고 하더라도 함수로 호출하는것인지 컴포넌트 형태로 호출하는것인지 잘 파악하고, 그 차이를 인지해서 사용해야 합니다.
 
 # References
 
-- https://reactjs.org/docs/render-props.html
-- https://dev.to/igor_bykov/react-calling-functional-components-as-functions-1d3l
-- https://kentcdodds.com/blog/dont-call-a-react-function-component
+-   https://reactjs.org/docs/render-props.html
+-   https://dev.to/igor_bykov/react-calling-functional-components-as-functions-1d3l
+-   https://kentcdodds.com/blog/dont-call-a-react-function-component

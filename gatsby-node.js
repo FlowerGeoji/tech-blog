@@ -26,6 +26,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
                     }
                     internal {
                         contentFilePath
+                        type
                     }
                 }
             }
