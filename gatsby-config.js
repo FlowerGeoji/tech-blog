@@ -165,7 +165,7 @@ module.exports = {
                         query: `
                         {
                             allMdx(
-                                sort: { order: DESC, fields: [frontmatter___date] },
+                                sort: { frontmatter: { date: DESC } },
                             ) {
                                 nodes {
                                     excerpt

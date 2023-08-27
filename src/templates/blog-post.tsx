@@ -124,7 +124,7 @@ export const pageQuery = graphql`
                 title
             }
         }
-        related: allMdx(sort: { order: DESC, fields: frontmatter___date }, filter: { id: { ne: $id }, frontmatter: { related: { eq: $related, ne: null } } }) {
+        related: allMdx(sort: { frontmatter: { date: DESC } }, filter: { id: { ne: $id }, frontmatter: { related: { eq: $related, ne: null } } }) {
             nodes {
                 id
                 fields {

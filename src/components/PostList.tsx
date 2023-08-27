@@ -12,7 +12,7 @@ interface IPostListProps {
 function PostList({ category }: IPostListProps) {
     const data = useStaticQuery<{ allMdx: AllMdx }>(graphql`
         query PostList {
-            allMdx(sort: { fields: [frontmatter___date], order: DESC }, filter: { frontmatter: { draft: { eq: false } } }) {
+            allMdx(sort: { frontmatter: { date: DESC } }, filter: { frontmatter: { draft: { eq: false } } }) {
                 nodes {
                     excerpt
                     fields {
