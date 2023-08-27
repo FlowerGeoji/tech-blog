@@ -1,7 +1,7 @@
 import * as React from "react"
 import cn from "classnames"
 import { Link, graphql } from "gatsby"
-import { prop } from "ramda"
+import { isEmpty, isNotNil, prop } from "ramda"
 
 import Adsense from "react-adsense"
 import Bio from "../components/Bio"
@@ -13,8 +13,8 @@ import KakaoAdfit from "../components/KakaoAdfit"
 
 import "../styles/code.scss"
 
-const BlogPostTemplate = ({ data, location }) => {
-    const post = data.markdownRemark
+const BlogPostTemplate = ({ data, location, children }) => {
+    const post = data.mdx
     const siteTitle = data.site.siteMetadata?.title || `Title`
     const { previous, next, related } = data
 
@@ -24,14 +24,19 @@ const BlogPostTemplate = ({ data, location }) => {
             <article className={cn("blog-post")} itemScope itemType="http://schema.org/Article">
                 <header className={cn("pb-5")}>
                     <h1 itemProp="headline">{post.frontmatter.title}</h1>
-                    <span className={cn("text-sm")}>{post.frontmatter.date}</span>
+                    <span className={cn("text-sm")}>
+                        {`${post.frontmatter.date}`}
+                        {isNotNil(post.frontmatter.modified) && !isEmpty(post.frontmatter.modified) && ` - (업데이트됨: ${post.frontmatter.modified})`}
+                    </span>
                 </header>
 
                 <div className={cn("flex", "items-center", "justify-center")}>
                     <KakaoAdfit adUnit={"DAN-g54XFc5zmIhKyNJr"} adWidth={728} adHeight={90} style={{ display: "none" }} />
                 </div>
 
-                <section className={cn("pt-10")} dangerouslySetInnerHTML={{ __html: post.html }} itemProp="articleBody" />
+                <section className={cn("pt-10")} itemProp="articleBody">
+                    {children}
+                </section>
 
                 <RelatedPosts className={cn("border-t", "mt-10")} relatedPosts={prop("nodes", related)} />
 
@@ -82,7 +87,7 @@ const NavClassName = cn(
     "bg-secondary",
     "bg-opacity-5",
     "border-secondary",
-    "border-opacity-5"
+    "border-opacity-5",
 )
 
 export default BlogPostTemplate
@@ -94,17 +99,16 @@ export const pageQuery = graphql`
                 title
             }
         }
-        markdownRemark(id: { eq: $id }) {
+        mdx(id: { eq: $id }) {
             id
             excerpt(pruneLength: 160)
-            html
             frontmatter {
                 title
                 date(formatString: "MMMM DD, YYYY")
                 description
             }
         }
-        previous: markdownRemark(id: { eq: $previousPostId }) {
+        previous: mdx(id: { eq: $previousPostId }) {
             fields {
                 slug
             }
@@ -112,7 +116,7 @@ export const pageQuery = graphql`
                 title
             }
         }
-        next: markdownRemark(id: { eq: $nextPostId }) {
+        next: mdx(id: { eq: $nextPostId }) {
             fields {
                 slug
             }
@@ -120,10 +124,7 @@ export const pageQuery = graphql`
                 title
             }
         }
-        related: allMarkdownRemark(
-            sort: { order: DESC, fields: frontmatter___date }
-            filter: { id: { ne: $id }, frontmatter: { related: { eq: $related, ne: null } } }
-        ) {
+        related: allMdx(sort: { order: DESC, fields: frontmatter___date }, filter: { id: { ne: $id }, frontmatter: { related: { eq: $related, ne: null } } }) {
             nodes {
                 id
                 fields {

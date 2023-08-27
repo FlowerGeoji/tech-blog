@@ -2,7 +2,6 @@
 title: React Pattern - Compound Components
 date: 2022-08-12 22:08:57
 category: react
-thumbnail: { thumbnailSrc }
 related: react-pattern
 draft: false
 ---
@@ -11,14 +10,14 @@ draft: false
 
 # Compound Components Pattern
 
-Compound Components는 간단하게 말하면 **서로 내부 상태를 공유하는 컴포넌트 집합이라고 보면 되겠습니다.** 간단한 예시로 기본 html 태그인 ``<select>``와 ``<option>`` 또는, Material-ui의 [``<RadioGroup/>``](https://mui.com/material-ui/react-radio-button/#radio-group) 같은 컴포넌트들을 들 수 있습니다.
+Compound Components는 간단하게 말하면 **서로 내부 상태를 공유하는 컴포넌트 집합이라고 보면 되겠습니다.** 간단한 예시로 기본 html 태그인 `<select>`와 `<option>` 또는, Material-ui의 [`<RadioGroup/>`](https://mui.com/material-ui/react-radio-button/#radio-group) 같은 컴포넌트들을 들 수 있습니다.
 
 ```tsx
 const CompoundComponents: React.FC<ICompoundComponentsProps> = function () {
     const [_value, _setValue] = useState("value2")
 
     return (
-        <select value={_value} onChange={(event) => _setValue(event.target.value)}>
+        <select value={_value} onChange={event => _setValue(event.target.value)}>
             <option value="value1">Label1</option>
             <option value="value2">Label2</option>
             <option value="value3">Label3</option>
@@ -27,22 +26,23 @@ const CompoundComponents: React.FC<ICompoundComponentsProps> = function () {
 }
 ```
 
-``<select>``와 ``<option>``태그를 살펴보면, ``<option>``이 selected가 상태가 되면 ``<select>``의 onChange 이벤트가 트리거 되고, ``<select>``의 value 프로퍼티로 ``<option>``의 selected 상태가 컨트롤되는 모습을 볼 수 있습니다.
+`<select>`와 `<option>`태그를 살펴보면, `<option>`이 selected가 상태가 되면 `<select>`의 onChange 이벤트가 트리거 되고, `<select>`의 value 프로퍼티로 `<option>`의 selected 상태가 컨트롤되는 모습을 볼 수 있습니다.
 
 이처럼 <u>서로 상태를 공유하면서 내부적으로 서로 결합되어 있는 컴포넌트</u>들을 Compounnd Components라고 하며, Compound Components 패턴을 사용하면 컴포넌트들 간에 공통 관심사를 손쉽게 연결할 수 있으며 컴포넌트의 복잡도 측면에서도 여러 가지 장점을 가지고 있습니다.
 
-- **컴포넌트의 복잡도를 낮추어 깔끔하게 작성할 수 있습니다.**
-- **적은 결합도(Coupling)를 유지하면서 공통 관심사를 깔끔하게 공유할 수 있습니다.**
-- **컴포넌트들이 서로 복잡하게 엮이지 않고, 각 역할마다 명확하게 컴포넌트를 분리할 수 있어 재사용성이 높고 유지 보수가 수월합니다.**
+-   **컴포넌트의 복잡도를 낮추어 깔끔하게 작성할 수 있습니다.**
+-   **적은 결합도(Coupling)를 유지하면서 공통 관심사를 깔끔하게 공유할 수 있습니다.**
+-   **컴포넌트들이 서로 복잡하게 엮이지 않고, 각 역할마다 명확하게 컴포넌트를 분리할 수 있어 재사용성이 높고 유지 보수가 수월합니다.**
 
 # 어떤 차이가 있을까?
 
-한번 예제를 통해서 Compound Components를 사용했을 때와 사용하지 않았을 때 어떻게 다른지 알아보겠습니다. 
+한번 예제를 통해서 Compound Components를 사용했을 때와 사용하지 않았을 때 어떻게 다른지 알아보겠습니다.
 
-아래 예시 컴포넌트는 ``Input``과 ``Shuffle 버튼``, ``Reset 버튼``으로 구성되어 있으며, ``Shuffle 버튼``을 누르면 난수를 생성하고 ``Reset 버튼``으로 값이 초기화되는 기능이 구현되어 있습니다. 초기 요구사항에서는 ``Input-Shuffle 버튼-Reset 버튼`` 순서로 되어 있었지만, 추후에 기능은 동일하지만 디자인은 조금 다른 요구사항이 추가되었다고 가정해 보겠습니다.
+아래 예시 컴포넌트는 `Input`과 `Shuffle 버튼`, `Reset 버튼`으로 구성되어 있으며, `Shuffle 버튼`을 누르면 난수를 생성하고 `Reset 버튼`으로 값이 초기화되는 기능이 구현되어 있습니다. 초기 요구사항에서는 `Input-Shuffle 버튼-Reset 버튼` 순서로 되어 있었지만, 추후에 기능은 동일하지만 디자인은 조금 다른 요구사항이 추가되었다고 가정해 보겠습니다.
 
 ![controlled-value-error](./shuffle-components.png)
-<!-- ![controlled-value-error](./shuffle-component2.png) -->
+
+{/* <!-- ![controlled-value-error](./shuffle-component2.png) --> */}
 
 ```tsx{13-14}
 // 초기 형태
@@ -92,9 +92,9 @@ const CompoundComponents: React.FC<ICompoundComponentsProps> = function () {
 </CompoundShuffle>
 ```
 
-그럼 Compound Components 패턴은 어떨까요? 위 예제 코드에서는 ``<CompoundShuffle>`` 컴포넌트가 children으로 ``<Input>``과 ``<Button>`` 컴포넌트가 들어오면 내부 상태와 로직을 공유하여 요구사항의 기능대로 동작하도록 하고 있습니다.
+그럼 Compound Components 패턴은 어떨까요? 위 예제 코드에서는 `<CompoundShuffle>` 컴포넌트가 children으로 `<Input>`과 `<Button>` 컴포넌트가 들어오면 내부 상태와 로직을 공유하여 요구사항의 기능대로 동작하도록 하고 있습니다.
 
-``<CompoundShuffle>`` 컴포넌트가 요구사항의 '기능'역할만을 담당하고, '디자인'역할은 각각의 컴포넌트들과 ReactNode 구성으로 나타내고 있습니다. **이렇게 명확하게 역할들이 구분되면서 요구사항이 수정되거나 추가되더라도 좀 더 유연하게 처리하는 모습을 볼 수 있습니다.** 또한 각각의 컴포넌트들은 각자의 역할대로 독립적으로 재사용할 수 있으며 필요에 따라 Compound Components로 결합되어 사용될 수도 있습니다.
+`<CompoundShuffle>` 컴포넌트가 요구사항의 '기능'역할만을 담당하고, '디자인'역할은 각각의 컴포넌트들과 ReactNode 구성으로 나타내고 있습니다. **이렇게 명확하게 역할들이 구분되면서 요구사항이 수정되거나 추가되더라도 좀 더 유연하게 처리하는 모습을 볼 수 있습니다.** 또한 각각의 컴포넌트들은 각자의 역할대로 독립적으로 재사용할 수 있으며 필요에 따라 Compound Components로 결합되어 사용될 수도 있습니다.
 
 # Context Provider
 
@@ -158,23 +158,12 @@ export const Input: React.FC<IInputProps> = function ({ value, ...others }) {
     const shuffleContext = useContext(ShuffleContext)
     const isCompounded = shuffleContext !== undefined
 
-    return (
-        <input
-            value={isCompounded ? shuffleContext?.value : value}
-            {...others}
-        />
-    )
+    return <input value={isCompounded ? shuffleContext?.value : value} {...others} />
 }
 ```
 
 ```tsx
-export const Button: React.FC<IButtonProps> = function ({
-    type,
-    onClick,
-    hidden,
-    children,
-    ...others
-}) {
+export const Button: React.FC<IButtonProps> = function ({ type, onClick, hidden, children, ...others }) {
     const shuffleContext = useContext(ShuffleContext)
     const isCompounded = shuffleContext !== undefined
     const isSubmit = type === "submit"
@@ -185,15 +174,12 @@ export const Button: React.FC<IButtonProps> = function ({
     const _onClick: MouseEventHandler<HTMLButtonElement> = function (event) {
         if (isCompounded) {
             if (isSubmit) {
-                shuffleContext.onShuffle?.(
-                    calRandomNumber(shuffleContext.min, shuffleContext.max),
-                )
+                shuffleContext.onShuffle?.(calRandomNumber(shuffleContext.min, shuffleContext.max))
             }
             if (isReset) {
                 shuffleContext.onReset?.()
             }
-        }
-        else {
+        } else {
             onClick?.(event)
         }
     }
@@ -202,7 +188,7 @@ export const Button: React.FC<IButtonProps> = function ({
 }
 ```
 
-그리고 같이 상태를 공유할 컴포넌트들은 ``useContext``를 통하여 해당 Context를 가져와 사용하게 됩니다. 만약 Context가 존재한다면 결합된 형태(``Compound Components``)로 동작하고, 존재하지 않으면(``undefined``) 각자 독립된 역할들을 수행하도록 컴포넌트들을 작성합니다.
+그리고 같이 상태를 공유할 컴포넌트들은 `useContext`를 통하여 해당 Context를 가져와 사용하게 됩니다. 만약 Context가 존재한다면 결합된 형태(`Compound Components`)로 동작하고, 존재하지 않으면(`undefined`) 각자 독립된 역할들을 수행하도록 컴포넌트들을 작성합니다.
 
 # 마무리
 

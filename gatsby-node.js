@@ -12,36 +12,37 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     const blogPost = path.resolve(`./src/templates/blog-post.tsx`)
 
     // Get all markdown blog posts sorted by date
-    const result = await graphql(
-        `
-            {
-                allMarkdownRemark(sort: { fields: [frontmatter___date], order: ASC }, filter: { frontmatter: { draft: { eq: false } } }, limit: 1000) {
-                    nodes {
-                        id
-                        fields {
-                            slug
-                        }
-                        frontmatter {
-                            category
-                            related
-                        }
+    const result = await graphql(`
+        {
+            allMdx(sort: { fields: [frontmatter___date], order: ASC }, filter: { frontmatter: { draft: { eq: false } } }, limit: 1000) {
+                nodes {
+                    id
+                    fields {
+                        slug
                     }
-                }
-                site {
-                    siteMetadata {
-                        categories
+                    frontmatter {
+                        category
+                        related
+                    }
+                    internal {
+                        contentFilePath
                     }
                 }
             }
-        `
-    )
+            site {
+                siteMetadata {
+                    categories
+                }
+            }
+        }
+    `)
 
     if (result.errors) {
         reporter.panicOnBuild(`There was an error loading your blog posts`, result.errors)
         return
     }
 
-    const posts = result.data.allMarkdownRemark.nodes
+    const posts = result.data.allMdx.nodes
 
     // Create blog posts pages
     // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
@@ -54,7 +55,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
             createPage({
                 path: post.fields.slug,
-                component: blogPost,
+                component: `${blogPost}?__contentFilePath=${post.internal.contentFilePath}`,
                 context: {
                     id: post.id,
                     previousPostId,
@@ -69,7 +70,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
     const { createNodeField } = actions
 
-    if (node.internal.type === `MarkdownRemark`) {
+    if (node.internal.type === `Mdx`) {
         const value = createFilePath({ node, getNode })
 
         createNodeField({
@@ -87,7 +88,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     // This way those will always be defined even if removed from gatsby-config.js
 
     // Also explicitly define the Markdown frontmatter
-    // This way the "MarkdownRemark" queries will return `null` even when no
+    // This way the "Mdx" queries will return `null` even when no
     // blog posts are stored inside "content/blog" instead of returning an error
     createTypes(`
     type SiteSiteMetadata {
@@ -107,7 +108,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       github: String
     }
 
-    type MarkdownRemark implements Node {
+    type Mdx implements Node {
       frontmatter: Frontmatter
       fields: Fields
     }

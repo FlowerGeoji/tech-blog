@@ -17,6 +17,7 @@ interface Frontmatter {
     title?: string
     description?: string
     date?: Date
+    modified?: Date
     category?: string
     related?: string
 }
@@ -25,12 +26,12 @@ interface Fields {
     slug: string
 }
 
-interface MarkdownRemark {
+interface Mdx {
     excerpt?: string
     frontmatter?: Frontmatter
     fields?: Fields
 }
 
-interface AllMarkdownRemark {
-    nodes?: MarkdownRemark[]
+interface AllMdx {
+    nodes?: Mdx[]
 }

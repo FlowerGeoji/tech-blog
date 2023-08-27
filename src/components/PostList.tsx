@@ -10,9 +10,9 @@ interface IPostListProps {
 }
 
 function PostList({ category }: IPostListProps) {
-    const data = useStaticQuery<{ allMarkdownRemark: AllMarkdownRemark }>(graphql`
+    const data = useStaticQuery<{ allMdx: AllMdx }>(graphql`
         query PostList {
-            allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }, filter: { frontmatter: { draft: { eq: false } } }) {
+            allMdx(sort: { fields: [frontmatter___date], order: DESC }, filter: { frontmatter: { draft: { eq: false } } }) {
                 nodes {
                     excerpt
                     fields {
@@ -20,6 +20,7 @@ function PostList({ category }: IPostListProps) {
                     }
                     frontmatter {
                         date(formatString: "YYYY/MM/DD")
+                        modified(formatString: "YYYY/MM/DD")
                         title
                         description
                         category
@@ -29,10 +30,7 @@ function PostList({ category }: IPostListProps) {
         }
     `)
 
-    const posts =
-        isEmpty(category) || isNil(category)
-            ? data.allMarkdownRemark.nodes
-            : filter(node => equals(node.frontmatter.category, category), data.allMarkdownRemark.nodes)
+    const posts = isEmpty(category) || isNil(category) ? data.allMdx.nodes : filter(node => equals(node.frontmatter.category, category), data.allMdx.nodes)
 
     if (posts.length === 0) {
         return (

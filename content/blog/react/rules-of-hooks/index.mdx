@@ -1,7 +1,7 @@
 ---
 title: Rules of Hooks(feat. React Error 300 & 310)
 date: 2022-07-12 23:07:87
-description: Hook 사용 규칙과 Hook을 잘못 사용했을 때 어떠한 문제가 있는지 알아보도록 하겠습니다.
+description: React Hook을 사용할때 지켜야하는 규칙은 무엇인지 그리고, 잘못 사용했을 때 어떠한 문제가 있는지 알아보도록 하겠습니다.
 category: react
 thumbnail: { thumbnailSrc }
 draft: false
@@ -9,7 +9,7 @@ draft: false
 
 # React Error 300 & 310
 
-React 애플리케이션을 만들다 보면 종종 다음과 같은 오류들을 만날 수가 있습니다.
+React 개발을 하다보면 종종 다음과 같은 오류들을 만날 수가 있습니다.
 
 ![react-error-310](./error-310.png)
 
@@ -25,10 +25,10 @@ React 컴포넌트는 Hook의 호출 순서로 자신의 상태를 관리하기 
 
 그렇기 때문에 Hook을 사용할 때는 [Hook 규칙](https://reactjs.org/docs/hooks-rules.html)을 지켜서 사용해야 합니다.
 
-- **Only Call Hooks at the Top Level** - Hook은 컴포넌트의 Top level(가장 위)에서 선언되어야 한다.
-- **Don’t call Hooks inside loops, conditions, or nested functions** - Hook은 반복문이나 조건문 또는 콜백 함수 내부에서 선언돼서는 안된다.
-- **Only Call Hooks from React Functions** - Hook은 오직 React Function Component에서만 사용해야한다.
-- **Don’t call Hooks from regular JavaScript functions** - Hook으 React Function Component가 아닌 다른 함수에서 사용하면 안된다.
+-   **Only Call Hooks at the Top Level** - Hook은 컴포넌트의 Top level(가장 위)에서 선언되어야 한다.
+-   **Don’t call Hooks inside loops, conditions, or nested functions** - Hook은 반복문이나 조건문 또는 콜백 함수 내부에서 선언돼서는 안된다.
+-   **Only Call Hooks from React Functions** - Hook은 오직 React Function Component에서만 사용해야한다.
+-   **Don’t call Hooks from regular JavaScript functions** - Hook으 React Function Component가 아닌 다른 함수에서 사용하면 안된다.
 
 # Hook을 잘못 사용하면 어떻게 될까?
 
@@ -40,7 +40,7 @@ Hook을 Top level(컴포넌트 코드 최상단)에서 사용하지 않을 경�
 function App() {
     const [time, setTime] = useState<Date>(new Date())
 
-    // ⛔️ Error300 - Rendered fewer hooks than expected. 
+    // ⛔️ Error300 - Rendered fewer hooks than expected.
     // This may be caused by an accidental early return statement.
     if (time !== undefined) {
         return (
@@ -153,13 +153,13 @@ Hook은 항상 렌더링 사이클에 맞춰서 실행되어야 하며, 각 렌�
 function App() {
     const [time, setTime] = useState<Date>(undefined)
 
-    // ✅ 
+    // ✅
     useEffect(()=>{
         if (time !== undefined) {
             alert(time)
         }
     }, [time])
-    
+
 
     return (
         <div className="App">
@@ -179,10 +179,7 @@ React Node 형태(children)로 렌더링을 호출하지 않고, Render Props �
 만약 Render Props 함수에서 Hook을 사용하게 되면, 해당 함수는 컴포넌트가 아니기 때문에 사용된 Hook은 함수를 호출한 컴포넌트에서 실행되게 되어 문제가 발생하게 됩니다.
 
 ```tsx
-function TimeComponent(props: { 
-    time?: Date; 
-    render: (date?: any) => JSX.Element 
-}) {
+function TimeComponent(props: { time?: Date; render: (date?: any) => JSX.Element }) {
     const { time, render } = props
     const [label] = useState("시간은 ")
 
@@ -246,4 +243,4 @@ setTime(new Date())
 
 # References
 
-- [Rules of Hook] - https://reactjs.org/docs/hooks-rules.html
+-   [Rules of Hook] - https://reactjs.org/docs/hooks-rules.html

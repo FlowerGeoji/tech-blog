@@ -14,24 +14,14 @@ module.exports = {
         siteUrl: `https://flowergeoji.me`,
     },
     plugins: [
+        `gatsby-plugin-react-helmet`,
+        `gatsby-plugin-image`,
+        `gatsby-plugin-sharp`,
+        `gatsby-transformer-sharp`,
         {
-            resolve: `gatsby-source-filesystem`,
+            resolve: `gatsby-plugin-mdx`,
             options: {
-                path: `${__dirname}/content/blog`,
-                name: `blog`,
-            },
-        },
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: `images`,
-                path: `${__dirname}/src/images`,
-            },
-        },
-        {
-            resolve: `gatsby-transformer-remark`,
-            options: {
-                plugins: [
+                gatsbyRemarkPlugins: [
                     {
                         resolve: `gatsby-remark-images`,
                         options: {
@@ -55,10 +45,27 @@ module.exports = {
                 ],
             },
         },
-        `gatsby-plugin-react-helmet`,
-        `gatsby-plugin-image`,
-        `gatsby-transformer-sharp`,
-        `gatsby-plugin-sharp`,
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `pages`,
+                path: `${__dirname}/src/pages`,
+            },
+        },
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                path: `${__dirname}/content/blog`,
+                name: `posts`,
+            },
+        },
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `images`,
+                path: `${__dirname}/src/images`,
+            },
+        },
         {
             resolve: `gatsby-plugin-google-analytics`,
             options: {
@@ -87,10 +94,16 @@ module.exports = {
                         siteMetadata {
                             siteUrl
                         }
-                    }
-                    allSitePage {
+                    }  
+                    allMdx {
                         nodes {
-                            path
+                            fields {
+                                slug
+                            }
+                            frontmatter {
+                                modified
+                                date
+                            }
                         }
                     }
                 }`,
@@ -99,15 +112,25 @@ module.exports = {
                         siteMetadata: { siteUrl },
                     },
                 }) => siteUrl,
-                resolvePages: ({ allSitePage: { nodes: allPages } }) => {
-                    return allPages.map(page => {
-                        return { ...page }
+                resolvePages: ({ allMdx: { nodes: allMarkdownPages } }) => {
+                    const pages = allMarkdownPages.map(page => {
+                        const modified =
+                            page.frontmatter.modified === null || page.frontmatter.modified === undefined || page.frontmatter.modified === ""
+                                ? page.frontmatter.date
+                                : page.frontmatter.modified
+                        return {
+                            path: page.fields.slug,
+                            modified,
+                        }
                     })
+                    return [...pages]
                 },
-                serialize: ({ path, modifiedGmt }) => {
+                serialize: ({ path, modified }) => {
                     return {
                         url: path,
-                        lastmod: modifiedGmt,
+                        lastmod: modified,
+                        changefreq: "daily",
+                        priority: 0.7,
                     }
                 },
             },
@@ -128,8 +151,8 @@ module.exports = {
                 }`,
                 feeds: [
                     {
-                        serialize: ({ query: { site, allMarkdownRemark } }) => {
-                            return allMarkdownRemark.nodes.map(node => {
+                        serialize: ({ query: { site, allMdx } }) => {
+                            return allMdx.nodes.map(node => {
                                 return Object.assign({}, node.frontmatter, {
                                     description: node.excerpt,
                                     date: node.frontmatter.date,
@@ -141,18 +164,18 @@ module.exports = {
                         },
                         query: `
                         {
-                            allMarkdownRemark(
+                            allMdx(
                                 sort: { order: DESC, fields: [frontmatter___date] },
                             ) {
                                 nodes {
                                     excerpt
                                     html
                                     fields {
-                                    slug
+                                        slug
                                     }
                                     frontmatter {
-                                    title
-                                    date
+                                        title
+                                        date
                                     }
                                 }
                             }

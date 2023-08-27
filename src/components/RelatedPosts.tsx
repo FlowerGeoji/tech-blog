@@ -4,7 +4,7 @@ import cn from "classnames"
 import PostItem from "../components/PostItem"
 
 interface ICategoriesProps {
-    relatedPosts?: MarkdownRemark[]
+    relatedPosts?: Mdx[]
     className?: string
 }
 
@@ -17,7 +17,7 @@ function Categories({ relatedPosts = [], className }: ICategoriesProps) {
                     relatedPost => (
                         <PostItem post={relatedPost} />
                     ),
-                    relatedPosts
+                    relatedPosts,
                 )}
             </ul>
         </section>
@@ -36,7 +36,7 @@ const NavClassName = cn(
     "hover:bg-primary",
     "hover:bg-opacity-5",
     "border-primary",
-    "border-opacity-90"
+    "border-opacity-90",
 )
 
 export default Categories

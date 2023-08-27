@@ -1,9 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
 import cn from "classnames"
+import { isEmpty, isNotNil } from "ramda"
 
 interface IPostItemProps {
-    post: MarkdownRemark
+    post: Mdx
 }
 
 export default function PostItem({ post }: IPostItemProps) {
@@ -16,7 +17,10 @@ export default function PostItem({ post }: IPostItemProps) {
                             {post.frontmatter.title || post.fields.slug}
                         </span>
                     </h3>
-                    <small className={cn("text-light")}>{post.frontmatter.date}</small>
+                    <small className={cn("text-light")}>
+                        {`${String(post.frontmatter.date)}`}
+                        {isNotNil(post.frontmatter.modified) && !isEmpty(post.frontmatter.modified) && ` - (업데이트됨: ${String(post.frontmatter.modified)})`}
+                    </small>
                 </header>
                 <section>
                     <p
