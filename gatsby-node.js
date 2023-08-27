@@ -117,6 +117,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       description: String
       date: Date @dateformat
+      modified: Date @dateformat
       category: String
       related: String
     }
